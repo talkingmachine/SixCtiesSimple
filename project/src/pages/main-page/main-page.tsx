@@ -1,10 +1,11 @@
 import MainPageCard from '../../components/main-page-card/main-page-card';
+import headerLogo from '../../img/logo.svg';
 
 type MainPageProps = {
   rentalOfferCount: number;
 }
 
-function MainPage (props: MainPageProps):JSX.Element {
+function MainPage ({rentalOfferCount}: MainPageProps):JSX.Element {
   return (
     <div>
       <div style={{display: 'none'}}>
@@ -15,7 +16,7 @@ function MainPage (props: MainPageProps):JSX.Element {
           <div className="header__wrapper">
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active" href="/#">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
+                <img className="header__logo" src={headerLogo} alt="6 cities logo" width={81} height={41} />
               </a>
             </div>
             <nav className="header__nav">
@@ -78,7 +79,7 @@ function MainPage (props: MainPageProps):JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{props.rentalOfferCount} places to stay in Amsterdam</b>
+              <b className="places__found">{rentalOfferCount} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -95,11 +96,7 @@ function MainPage (props: MainPageProps):JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <MainPageCard />
-                <MainPageCard />
-                <MainPageCard />
-                <MainPageCard />
-                <MainPageCard />
+                {[...Array(5).keys()].map((item) => (<MainPageCard key={item}/>))}
               </div>
             </section>
             <div className="cities__right-section">

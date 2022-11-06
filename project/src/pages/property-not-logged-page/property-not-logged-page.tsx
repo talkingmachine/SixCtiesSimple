@@ -1,4 +1,12 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
+import logoImage from '../../img/logo.svg';
+import roomImage from '../../img/room.jpg';
+import apartment01Image from '../../img/apartment-01.jpg';
+import apartment02Image from '../../img/apartment-02.jpg';
+import apartment03Image from '../../img/apartment-03.jpg';
+import studio01Image from '../../img/studio-01.jpg';
+import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
+import avatarMaxImage from '../../img/avatar-max.jpg';
+
 
 function MainPage ():JSX.Element {
   return (
@@ -11,7 +19,7 @@ function MainPage ():JSX.Element {
           <div className="header__wrapper">
             <div className="header__left">
               <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />
+                <img className="header__logo" src={logoImage} alt="6 cities logo" width={81} height={41} />
               </a>
             </div>
             <nav className="header__nav">
@@ -32,22 +40,22 @@ function MainPage ():JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
+                <img className="property__image" src={roomImage} alt="Studio" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
+                <img className="property__image" src={apartment01Image} alt="Studio" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
+                <img className="property__image" src={apartment02Image} alt="Studio" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
+                <img className="property__image" src={apartment03Image} alt="Studio" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
+                <img className="property__image" src={studio01Image} alt="Studio" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
+                <img className="property__image" src={apartment01Image} alt="Studio" />
               </div>
             </div>
           </div>
@@ -122,7 +130,7 @@ function MainPage ():JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" alt="Host avatar" width={74} height={74} />
+                    <img className="property__avatar user__avatar" src={avatarAngelinaImage} alt="Host avatar" width={74} height={74} />
                   </div>
                   <span className="property__user-name">
                 Angelina
@@ -146,7 +154,7 @@ function MainPage ():JSX.Element {
                   <li className="reviews__item">
                     <div className="reviews__user user">
                       <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" alt="Reviews avatar" width={54} height={54} />
+                        <img className="reviews__avatar user__avatar" src={avatarMaxImage} alt="Reviews avatar" width={54} height={54} />
                       </div>
                       <span className="reviews__user-name">
                     Max
@@ -178,7 +186,7 @@ function MainPage ():JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/#">
-                    <img className="place-card__image" src="img/room.jpg" alt="Place image" width={260} height={200} />
+                    <img className="place-card__image" src={roomImage} alt="Place" width={260} height={200} />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -203,7 +211,7 @@ function MainPage ():JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/#">
-                    <img className="place-card__image" src="img/apartment-02.jpg" alt="Place image" width={260} height={200} />
+                    <img className="place-card__image" src={apartment02Image} alt="Place" width={260} height={200} />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -231,7 +239,7 @@ function MainPage ():JSX.Element {
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="/#">
-                    <img className="place-card__image" src="img/apartment-03.jpg" alt="Place image" width={260} height={200} />
+                    <img className="place-card__image" src={apartment03Image} alt="Place" width={260} height={200} />
                   </a>
                 </div>
                 <div className="place-card__info">

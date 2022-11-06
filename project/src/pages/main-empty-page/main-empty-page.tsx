@@ -1,3 +1,4 @@
+import headerLogo from '../../img/logo.svg';
 
 function MainPage ():JSX.Element {
   return (
@@ -10,7 +11,7 @@ function MainPage ():JSX.Element {
           <div className="header__wrapper">
             <div className="header__left">
               <a className="header__logo-link header__logo-link--active" href="/#">
-                <img className="header__logo" src="img/logo.svg" alt="six cities logo" width={81} height={41} />
+                <img className="header__logo" src={headerLogo} alt="six cities logo" width={81} height={41} />
               </a>
             </div>
             <nav className="header__nav">

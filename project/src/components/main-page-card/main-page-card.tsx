@@ -1,11 +1,12 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
+import apartment02Image from '../../img/apartment-02.jpg';
+
 
 function MainPageCard ():JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/#">
-          <img className="place-card__image" src="img/apartment-02.jpg" alt="Place image" width={260} height={200} />
+          <img className="place-card__image" src={apartment02Image} alt="Place" width={260} height={200} />
         </a>
       </div>
       <div className="place-card__info">

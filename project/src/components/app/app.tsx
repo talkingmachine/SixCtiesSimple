@@ -4,8 +4,8 @@ type AppProps = {
   rentalOfferCount: number;
 }
 
-function App(props:AppProps): JSX.Element {
-  return <MainPage rentalOfferCount={props.rentalOfferCount}/>;
+function App({rentalOfferCount}:AppProps): JSX.Element {
+  return <MainPage rentalOfferCount={rentalOfferCount}/>;
 }
 
 export default App;
