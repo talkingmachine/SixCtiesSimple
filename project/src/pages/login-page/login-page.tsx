@@ -1,6 +1,6 @@
 import headerLogo from '../../img/logo.svg';
 
-function MainPage ():JSX.Element {
+function LoginPage ():JSX.Element {
   return (
     <div className="page page--gray page--login">
       <div style={{display: 'none'}}>
@@ -46,4 +46,4 @@ function MainPage ():JSX.Element {
   );
 }
 
-export default MainPage;
+export default LoginPage;
