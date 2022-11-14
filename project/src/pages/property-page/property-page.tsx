@@ -7,7 +7,7 @@ import studio01Image from '../../img/studio-01.jpg';
 import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
 import avatarMaxImage from '../../img/avatar-max.jpg';
 
-function MainPage ():JSX.Element {
+function PropertyPage ():JSX.Element {
   return (
     <div className="page">
       <div style={{display: 'none'}}>
@@ -315,4 +315,4 @@ function MainPage ():JSX.Element {
   );
 }
 
-export default MainPage;
+export default PropertyPage;

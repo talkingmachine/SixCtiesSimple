@@ -1,6 +1,6 @@
 import headerLogo from '../../img/logo.svg';
 
-function MainPage ():JSX.Element {
+function MainEmptyPage ():JSX.Element {
   return (
     <div className="page page--gray page--main">
       <div style={{display: 'none'}}>
@@ -86,4 +86,4 @@ function MainPage ():JSX.Element {
   );
 }
 
-export default MainPage;
+export default MainEmptyPage;
