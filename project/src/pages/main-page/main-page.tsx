@@ -1,11 +1,15 @@
-import MainPageCard from '../../components/main-page-card/main-page-card';
+import { Link } from 'react-router-dom';
+import OffersList from '../../components/offers-list/offers-list';
+import RouterPaths from '../../const/router-paths';
 import headerLogo from '../../img/logo.svg';
+import { PropertyData } from '../../types/types';
 
 type MainPageProps = {
-  rentalOfferCount: number;
+  propertyData: PropertyData;
+  rentalOfferCount:number;
 }
 
-function MainPage ({rentalOfferCount}: MainPageProps):JSX.Element {
+function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
   return (
     <div>
       <div style={{display: 'none'}}>
@@ -15,9 +19,9 @@ function MainPage ({rentalOfferCount}: MainPageProps):JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active" href="/#">
+              <Link className="header__logo-link header__logo-link--active" to={RouterPaths.main}>
                 <img className="header__logo" src={headerLogo} alt="6 cities logo" width={81} height={41} />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -28,9 +32,9 @@ function MainPage ({rentalOfferCount}: MainPageProps):JSX.Element {
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="/#">
+                  <Link className="header__nav-link" to={RouterPaths.login}>
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -96,7 +100,7 @@ function MainPage ({rentalOfferCount}: MainPageProps):JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {[...Array(5).keys()].map((item) => (<MainPageCard key={item}/>))}
+                <OffersList propertyData={propertyData}/>
               </div>
             </section>
             <div className="cities__right-section">

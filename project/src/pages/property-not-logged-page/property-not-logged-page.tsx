@@ -6,6 +6,8 @@ import apartment03Image from '../../img/apartment-03.jpg';
 import studio01Image from '../../img/studio-01.jpg';
 import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
 import avatarMaxImage from '../../img/avatar-max.jpg';
+import RouterPaths from '../../const/router-paths';
+import { Link } from 'react-router-dom';
 
 
 function PropertyNotLoggedPage ():JSX.Element {
@@ -18,17 +20,17 @@ function PropertyNotLoggedPage ():JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={RouterPaths.main}>
                 <img className="header__logo" src={logoImage} alt="6 cities logo" width={81} height={41} />
-              </a>
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/#">
+                  <Link className="header__nav-link header__nav-link--profile" to={RouterPaths.login}>
                     <div className="header__avatar-wrapper user__avatar-wrapper" />
                     <span className="header__login">Sign in</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
