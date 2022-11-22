@@ -16,12 +16,16 @@ function MainPageCard ({offerData, setActiveOfferId}:MainPageCardProps):JSX.Elem
   const parseRatingToStars = (number:number):string => (`${Math.round(number) * 20}%`);
   const parseFirstLetterToUpperCase = (word:string):string => (word ? word[0].toUpperCase() + word.slice(1) : '');
 
-  const toggleOfferActivity = (isOfferActive:boolean) => {
-    isOfferActive ? setActiveOfferId(id) : setActiveOfferId(-1);
+  const mouseOverHandle = () => {
+    setActiveOfferId(id);
+  };
+
+  const mouseLeaveHandle = () => {
+    setActiveOfferId(-1);
   };
 
   return (
-    <article onMouseOver={() => toggleOfferActivity(true)} onMouseLeave={() => toggleOfferActivity(false)} className="cities__card place-card">
+    <article onMouseOver={mouseOverHandle} onMouseLeave={mouseLeaveHandle} className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/#">
           <img className="place-card__image" src={apartment02Image} alt="Place" width={260} height={200} />

@@ -1,6 +1,6 @@
 import type { Comment } from '../types/types';
 
-const createCommentsList = ():Comment[] => [
+const getCommentsList:Comment[] = [
   {
     'comment': 'COMMENT 1 - A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     'date': 'San Aug 15 2021 13:44:00 GMT+0300 (Москва, стандартное время)',
@@ -52,4 +52,4 @@ const createCommentsList = ():Comment[] => [
   }
 ];
 
-export default createCommentsList;
+export default getCommentsList;

@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { PropertyData } from '../../types/types';
+import { Offer } from '../../types/types';
 import MainPageCard from '../main-page-card/main-page-card';
 
 type OfferListProps = {
-  propertyData: PropertyData;
+  offersList: Offer[];
 }
 
-function OffersList ({propertyData}:OfferListProps):JSX.Element {
-  const offersList = propertyData.offersList;
+function OffersList ({offersList}:OfferListProps):JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeOfferId, setActiveOfferId] = useState(offersList[0].id);
 

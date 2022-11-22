@@ -1,6 +1,6 @@
 import { Offer } from '../types/types';
 
-const createOffersList = ():Offer[] => [
+const getOffersList:Offer[] = [
   {
     'bedrooms': 3,
     'city': {
@@ -32,7 +32,7 @@ const createOffersList = ():Offer[] => [
       'zoom': 8
     },
     'maxAdults': 4,
-    'previewImage': 'img/1.png',
+    'previewImage': 'img/2.png',
     'price': 120,
     'rating': 4.8,
     'title': 'TITLE 1 - Beautiful & luxurious studio at great location',
@@ -52,7 +52,7 @@ const createOffersList = ():Offer[] => [
     'goods': [
     ],
     'host': {
-      'avatarUrl': 'img/2.png',
+      'avatarUrl': 'img/4.png',
       'id': 1,
       'isPro': false,
       'name': 'Veorra'
@@ -68,7 +68,7 @@ const createOffersList = ():Offer[] => [
       'zoom': 8
     },
     'maxAdults': 13,
-    'previewImage': 'img/2.png',
+    'previewImage': 'img/4.png',
     'price': 650,
     'rating': 4.0,
     'title': 'TITLE 2 - Beautiful & luxurious studio at great location',
@@ -89,7 +89,7 @@ const createOffersList = ():Offer[] => [
       'Heating'
     ],
     'host': {
-      'avatarUrl': 'img/3.png',
+      'avatarUrl': 'img/5.png',
       'id': 1,
       'isPro': true,
       'name': 'Clapp'
@@ -105,7 +105,7 @@ const createOffersList = ():Offer[] => [
       'zoom': 6
     },
     'maxAdults': 876,
-    'previewImage': 'img/3.png',
+    'previewImage': 'img/5.png',
     'price': 13,
     'rating': 2.8,
     'title': 'TITLE 3 - Beautiful & luxurious studio at great location',
@@ -125,7 +125,7 @@ const createOffersList = ():Offer[] => [
     'goods': [
     ],
     'host': {
-      'avatarUrl': 'img/4.png',
+      'avatarUrl': 'img/6.png',
       'id': 1,
       'isPro': false,
       'name': 'Groot'
@@ -141,7 +141,7 @@ const createOffersList = ():Offer[] => [
       'zoom': 4
     },
     'maxAdults': 909,
-    'previewImage': 'img/4.png',
+    'previewImage': 'img/7.png',
     'price': 676,
     'rating': 4.5,
     'title': 'TITLE 4 - Beautiful & luxurious studio at great location',
@@ -149,4 +149,4 @@ const createOffersList = ():Offer[] => [
   },
 ];
 
-export default createOffersList;
+export default getOffersList;

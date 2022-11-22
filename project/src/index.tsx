@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import createCommentsList from './mocks/comments';
-import createOffersList from './mocks/offers';
+import getCommentsList from './mocks/comments';
+import getOffersList from './mocks/offers';
 import { PropertyData } from './types/types';
 
 const propertyData:PropertyData = {
-  commentsList: createCommentsList(),
-  offersList: createOffersList()
+  commentsList: getCommentsList,
+  offersList: getOffersList
 };
 
 const root = ReactDOM.createRoot(
