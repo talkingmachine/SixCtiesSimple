@@ -1,7 +1,7 @@
 enum RouterPaths {
   main = '/',
   login = '/login',
-  offer = '/offer/:id'
+  offer = '/offer/'
 }
 
 export default RouterPaths;

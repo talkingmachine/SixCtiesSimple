@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import RouterPaths from '../../const/router-paths';
 import headerLogo from '../../img/logo.svg';
 
 function LoginPage ():JSX.Element {
@@ -10,9 +12,9 @@ function LoginPage ():JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
+              <Link className="header__logo-link" to={RouterPaths.main}>
                 <img className="header__logo" src={headerLogo} alt="6 cities logo" width={81} height={41} />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -35,9 +37,9 @@ function LoginPage ():JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/#">
+              <Link className="locations__item-link" to={RouterPaths.main}>
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>
