@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RouterPaths from '../../const/router-paths';
 import MainPage from '../../pages/main-page/main-page';
 import PropertyPage from '../../pages/property-page/property-page';
-import { PropertyData } from '../../types/types';
+import { PropertyData } from '../../types/offerCommentTypes';
 import NotFoundPage from '../not-found-page/not-found-page';
 const LoginPage = React.lazy(() => import ('../../pages/login-page/login-page'));
 

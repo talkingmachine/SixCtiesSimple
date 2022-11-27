@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
 import RouterPaths from '../../const/router-paths';
 import headerLogo from '../../img/logo.svg';
-import { PropertyData } from '../../types/types';
+import { city } from '../../mocks/mapData';
+import { PropertyData } from '../../types/offerCommentTypes';
 
 type MainPageProps = {
   propertyData: PropertyData;
@@ -10,6 +12,12 @@ type MainPageProps = {
 }
 
 function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
+  const pointsList = propertyData.offersList.map(({location})=>({
+    lat: location.latitude,
+    lng: location.longitude,
+    zoom: location.zoom
+  }));
+
   return (
     <div>
       <div style={{display: 'none'}}>
@@ -104,7 +112,9 @@ function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map" id="map">
+                <Map center={city} points={pointsList}/>
+              </section>
             </div>
           </div>
         </div>

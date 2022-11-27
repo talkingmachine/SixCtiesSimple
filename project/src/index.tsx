@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import getCommentsList from './mocks/comments';
 import getOffersList from './mocks/offers';
-import { PropertyData } from './types/types';
+import { PropertyData } from './types/offerCommentTypes';
 
 const propertyData:PropertyData = {
   commentsList: getCommentsList,
