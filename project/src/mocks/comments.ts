@@ -3,11 +3,11 @@ import type { Comment } from '../types/offerCommentTypes';
 const getCommentsList:Comment[] = [
   {
     'comment': 'COMMENT 1 - A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    'date': 'San Aug 15 2021 13:44:00 GMT+0300 (Москва, стандартное время)',
+    'date': 'Sun Aug 15 2021 13:44:00 GMT+0300 (Москва, стандартное время)',
     'id': 1,
     'rating': 2,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-max.jpg',
       'id': 1,
       'isPro': true,
       'name': 'Santa.Claus'
@@ -19,7 +19,7 @@ const getCommentsList:Comment[] = [
     'id': 2,
     'rating': 4,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-max.jpg',
       'id': 1,
       'isPro': false,
       'name': 'Oliver.Queen'
@@ -31,7 +31,7 @@ const getCommentsList:Comment[] = [
     'id': 3,
     'rating': 5,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-angelina.jpg',
       'id': 1,
       'isPro': true,
       'name': 'Dr.Martens'
@@ -44,7 +44,7 @@ const getCommentsList:Comment[] = [
     'id': 4,
     'rating': 3,
     'user': {
-      'avatarUrl': 'img/1.png',
+      'avatarUrl': 'img/avatar-angelina.jpg',
       'id': 1,
       'isPro': false,
       'name': 'Fly.Day'

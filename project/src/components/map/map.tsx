@@ -1,11 +1,11 @@
 import L from 'leaflet';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
-import { LeafletMap, point } from '../../types/mapTypes';
+import { LeafletMap, Point } from '../../types/mapTypes';
 
 type MapProps = {
-  center: point;
-  points: point[];
+  center: Point;
+  points: Point[];
 }
 
 function Map ({center, points}: MapProps):JSX.Element {

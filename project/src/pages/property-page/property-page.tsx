@@ -5,12 +5,24 @@ import apartment02Image from '../../img/apartment-02.jpg';
 import apartment03Image from '../../img/apartment-03.jpg';
 import studio01Image from '../../img/studio-01.jpg';
 import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
-import avatarMaxImage from '../../img/avatar-max.jpg';
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/router-paths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
+import { PropertyData } from '../../types/offerCommentTypes';
+import ReviewsList from '../../components/reviews-list/reviewsList';
+import Map from '../../components/map/map';
+import { city } from '../../mocks/mapData';
+import { convertOffersToPoints } from '../../utils/utils';
+import NearestPlaces from '../../components/nearest-places/nearestPlaces';
 
-function PropertyPage ():JSX.Element {
+type PropertyPageProps = {
+  propertyData: PropertyData;
+}
+
+function PropertyPage ({propertyData}: PropertyPageProps):JSX.Element {
+  const reviewsCount = propertyData.commentsList.length;
+  const nearestOffers = propertyData.offersList.slice(0, 3); /// logic
+
   return (
     <div className="page">
       <div style={{display: 'none'}}>
@@ -156,121 +168,18 @@ function PropertyPage ():JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src={avatarMaxImage} alt="Reviews avatar" width={54} height={54} />
-                      </div>
-                      <span className="reviews__user-name">
-                    Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}} />
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviewsCount}</span></h2>
+                <ReviewsList commentsList={propertyData.commentsList}/>
                 <NewCommentForm/>
               </section>
             </div>
           </div>
-          <section className="property__map map" />
+          <section className="property__map map">
+            <Map center={city} points={convertOffersToPoints(nearestOffers)}/>
+          </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="/#">
-                    <img className="place-card__image" src={roomImage} alt="Place" width={260} height={200} />
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">€80</b>
-                      <span className="place-card__price-text">/&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}} />
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="/#">Wood and stone place</a>
-                  </h2>
-                  <p className="place-card__type">Private room</p>
-                </div>
-              </article>
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="/#">
-                    <img className="place-card__image" src={apartment02Image} alt="Place" width={260} height={200} />
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">€132</b>
-                      <span className="place-card__price-text">/&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}} />
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="/#">Canal View Prinsengracht</a>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
-              <article className="near-places__card place-card">
-                <div className="place-card__mark">
-                  <span>Premium</span>
-                </div>
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="/#">
-                    <img className="place-card__image" src={apartment03Image} alt="Place" width={260} height={200} />
-                  </a>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">€180</b>
-                      <span className="place-card__price-text">/&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '100%'}} />
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <a href="/#">Nice, cozy, warm big bed apartment</a>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
-            </div>
-          </section>
+          <NearestPlaces offersList={propertyData.offersList} maxOffers={3}/>
         </div>
       </main>
     </div>

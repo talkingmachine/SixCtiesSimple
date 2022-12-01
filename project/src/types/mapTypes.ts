@@ -1,10 +1,11 @@
 import {Map} from 'leaflet';
 
-type point = {
+type Point = {
   lat: number;
   lng: number;
   zoom: number;
 };
+
 type LeafletMap = Map | null;
 
-export type {point, LeafletMap};
+export type {Point, LeafletMap};

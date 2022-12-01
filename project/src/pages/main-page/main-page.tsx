@@ -5,6 +5,7 @@ import RouterPaths from '../../const/router-paths';
 import headerLogo from '../../img/logo.svg';
 import { city } from '../../mocks/mapData';
 import { PropertyData } from '../../types/offerCommentTypes';
+import { convertOffersToPoints } from '../../utils/utils';
 
 type MainPageProps = {
   propertyData: PropertyData;
@@ -12,11 +13,6 @@ type MainPageProps = {
 }
 
 function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
-  const pointsList = propertyData.offersList.map(({location})=>({
-    lat: location.latitude,
-    lng: location.longitude,
-    zoom: location.zoom
-  }));
 
   return (
     <div>
@@ -113,7 +109,7 @@ function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" id="map">
-                <Map center={city} points={pointsList}/>
+                <Map center={city} points={convertOffersToPoints(propertyData.offersList)}/>
               </section>
             </div>
           </div>

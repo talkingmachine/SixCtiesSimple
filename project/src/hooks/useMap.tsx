@@ -1,8 +1,8 @@
 import {useState, MutableRefObject, useRef, useEffect} from 'react';
-import { point } from '../types/mapTypes';
+import { Point } from '../types/mapTypes';
 import L, {Map} from 'leaflet';
 
-function useMap(mapRef:MutableRefObject<HTMLElement | null>, center: point): Map | null {
+function useMap(mapRef:MutableRefObject<HTMLElement | null>, center: Point): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
 
