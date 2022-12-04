@@ -1,4 +1,4 @@
-import type { Comment } from '../types/offerCommentTypes';
+import type { Comment } from '../types/offerTypes';
 
 const getCommentsList:Comment[] = [
   {

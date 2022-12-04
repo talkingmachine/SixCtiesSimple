@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { locationNamesList } from './const/locationNamesList';
 import getCommentsList from './mocks/comments';
 import getOffersList from './mocks/offers';
-import { PropertyData } from './types/offerCommentTypes';
+import { PropertyData } from './types/offerTypes';
 
 const propertyData:PropertyData = {
   commentsList: getCommentsList,
@@ -16,6 +17,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App rentalOfferCount={propertyData.offersList.length} propertyData={propertyData}/>
+    <App locationNamesList={locationNamesList} rentalOfferCount={propertyData.offersList.length} propertyData={propertyData}/>
   </React.StrictMode>,
 );

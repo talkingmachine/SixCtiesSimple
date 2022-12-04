@@ -1,9 +1,11 @@
-import { Point } from '../types/mapTypes';
+import { City } from '../types/mapTypes';
 
-const city: Point = {
-  lat: 52.3909553943508,
-  lng: 4.85309666406198,
-  zoom: 10
+const city: City = {
+  location: {
+    lat: 52.3909553943508,
+    lng: 4.85309666406198,
+    zoom: 10},
+  name: 'Amsterdam'
 };
 
 export {city};

@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
+import LocationsList from '../../components/locations-list/locationsList';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
 import RouterPaths from '../../const/router-paths';
 import headerLogo from '../../img/logo.svg';
 import { city } from '../../mocks/mapData';
-import { PropertyData } from '../../types/offerCommentTypes';
+import { PropertyData } from '../../types/offerTypes';
 import { convertOffersToPoints } from '../../utils/utils';
 
 type MainPageProps = {
   propertyData: PropertyData;
   rentalOfferCount:number;
+  locationNamesList: string[];
 }
 
-function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
+function MainPage ({propertyData, rentalOfferCount, locationNamesList}:MainPageProps):JSX.Element {
 
   return (
     <div>
@@ -48,40 +50,7 @@ function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active" href="/#">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="/#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <LocationsList locationNamesList={locationNamesList}/>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
@@ -109,7 +78,7 @@ function MainPage ({propertyData, rentalOfferCount}:MainPageProps):JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" id="map">
-                <Map center={city} points={convertOffersToPoints(propertyData.offersList)}/>
+                <Map center={city.location} points={convertOffersToPoints(propertyData.offersList)}/>
               </section>
             </div>
           </div>

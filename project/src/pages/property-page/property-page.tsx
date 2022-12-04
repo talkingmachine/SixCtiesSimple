@@ -8,7 +8,7 @@ import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/router-paths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
-import { PropertyData } from '../../types/offerCommentTypes';
+import { PropertyData } from '../../types/offerTypes';
 import ReviewsList from '../../components/reviews-list/reviewsList';
 import Map from '../../components/map/map';
 import { city } from '../../mocks/mapData';
@@ -175,7 +175,7 @@ function PropertyPage ({propertyData}: PropertyPageProps):JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map center={city} points={convertOffersToPoints(nearestOffers)}/>
+            <Map center={city.location} points={convertOffersToPoints(nearestOffers)}/>
           </section>
         </section>
         <div className="container">

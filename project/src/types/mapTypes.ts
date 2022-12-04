@@ -6,6 +6,11 @@ type Point = {
   zoom: number;
 };
 
+type City = {
+  location: Point;
+  name: string;
+}
+
 type LeafletMap = Map | null;
 
-export type {Point, LeafletMap};
+export type {Point, LeafletMap, City};

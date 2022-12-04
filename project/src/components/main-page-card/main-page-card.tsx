@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/router-paths';
 import apartment02Image from '../../img/apartment-02.jpg';
-import { Offer } from '../../types/offerCommentTypes';
+import { Offer } from '../../types/offerTypes';
 import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils';
 
 type MainPageCardProps = {

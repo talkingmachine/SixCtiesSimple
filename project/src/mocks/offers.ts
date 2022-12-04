@@ -1,4 +1,4 @@
-import { Offer } from '../types/offerCommentTypes';
+import { Offer } from '../types/offerTypes';
 
 const getOffersList:Offer[] = [
   {
