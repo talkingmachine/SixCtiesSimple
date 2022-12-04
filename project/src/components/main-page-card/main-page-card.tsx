@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/router-paths';
 import apartment02Image from '../../img/apartment-02.jpg';
 import { Offer } from '../../types/offerCommentTypes';
+import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils';
 
 type MainPageCardProps = {
   offerData: Offer;
@@ -12,9 +13,6 @@ type MainPageCardProps = {
 function MainPageCard ({offerData, setActiveOfferId}:MainPageCardProps):JSX.Element {
 
   const {type, title, price, rating, id} = offerData;
-
-  const parseRatingToStars = (number:number):string => (`${Math.round(number) * 20}%`);
-  const parseFirstLetterToUpperCase = (word:string):string => (word ? word[0].toUpperCase() + word.slice(1) : '');
 
   const mouseOverHandle = () => {
     setActiveOfferId(id);
@@ -47,7 +45,7 @@ function MainPageCard ({offerData, setActiveOfferId}:MainPageCardProps):JSX.Elem
         <h2 className="place-card__name">
           <Link to={`${RouterPaths.offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{parseFirstLetterToUpperCase(type)}</p>
+        <p className="place-card__type">{firstLetterToUpperCase(type)}</p>
       </div>
     </article>);
 }

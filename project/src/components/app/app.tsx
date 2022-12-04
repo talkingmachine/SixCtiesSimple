@@ -18,7 +18,7 @@ function App({rentalOfferCount, propertyData}:AppProps): JSX.Element {
       <Routes>
         <Route path={RouterPaths.main} element={<MainPage rentalOfferCount={rentalOfferCount} propertyData={propertyData}/>} />
         <Route path={RouterPaths.login} element={<Suspense fallback={<span>Loading...</span>}><LoginPage/></Suspense>} />
-        <Route path={`${RouterPaths.offer}:id`} element={<PropertyPage/>} />
+        <Route path={`${RouterPaths.offer}:id`} element={<PropertyPage propertyData={propertyData}/>} />
         <Route path={'*'} element={<NotFoundPage/>} />
       </Routes>
     </BrowserRouter>
