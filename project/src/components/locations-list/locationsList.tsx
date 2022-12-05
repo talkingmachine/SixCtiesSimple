@@ -10,9 +10,9 @@ function LocationsList ({locationNamesList}:LocationsListProps):JSX.Element {
   const selectedCity = useSelectorTyped((state) => state.locationName);
   const dispatch = useDispatchTyped();
 
-  const onLocationClickHandle = (evt: React.MouseEvent) => {
+  const onLocationClickHandle = (evt: React.MouseEvent, locationName:string) => {
     evt.preventDefault();
-    dispatch(setCity({locationName: String(evt.currentTarget.firstChild?.textContent) })); //не знаю как проще.
+    dispatch(setCity({locationName: locationName }));
   };
 
   return (
@@ -20,7 +20,7 @@ function LocationsList ({locationNamesList}:LocationsListProps):JSX.Element {
       <ul className="locations__list tabs__list">
         {locationNamesList.map((locationName) => (
           <li key={locationName} className="locations__item">
-            <a onClick={onLocationClickHandle} className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': selectedCity === locationName})} href="/#">
+            <a onClick={(e) => onLocationClickHandle(e, locationName)} className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': selectedCity === locationName})} href="/#">
               <span>{locationName}</span>
             </a>
           </li>

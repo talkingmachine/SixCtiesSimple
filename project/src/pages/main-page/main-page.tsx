@@ -3,18 +3,18 @@ import LocationsList from '../../components/locations-list/locationsList';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
 import RouterPaths from '../../const/router-paths';
+import { useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
 import { city } from '../../mocks/mapData';
-import { PropertyData } from '../../types/offerTypes';
 import { convertOffersToPoints } from '../../utils/utils';
 
 type MainPageProps = {
-  propertyData: PropertyData;
-  rentalOfferCount:number;
   locationNamesList: string[];
 }
 
-function MainPage ({propertyData, rentalOfferCount, locationNamesList}:MainPageProps):JSX.Element {
+function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
+  const selectedCity = useSelectorTyped((state)=> state.locationName);
+  const cityOffers = useSelectorTyped((state)=> state.currentCityOffersList);
 
   return (
     <div>
@@ -56,7 +56,7 @@ function MainPage ({propertyData, rentalOfferCount, locationNamesList}:MainPageP
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{rentalOfferCount} places to stay in Amsterdam</b>
+              <b className="places__found">{cityOffers.length} places to stay in {selectedCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -73,12 +73,12 @@ function MainPage ({propertyData, rentalOfferCount, locationNamesList}:MainPageP
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList offersList={propertyData.offersList}/>
+                <OffersList cityOffers={cityOffers}/>
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" id="map">
-                <Map center={city.location} points={convertOffersToPoints(propertyData.offersList)}/>
+                <Map center={city.location} points={convertOffersToPoints(cityOffers)}/>
               </section>
             </div>
           </div>

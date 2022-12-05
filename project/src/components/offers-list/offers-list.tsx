@@ -1,18 +1,15 @@
 import { useState } from 'react';
-import { useSelectorTyped } from '../../hooks/typedWrappers';
 import { Offer } from '../../types/offerTypes';
 import MainPageCard from '../main-page-card/main-page-card';
 
 type OfferListProps = {
-  offersList: Offer[];
+  cityOffers: Offer[];
   maxOffers?: number;
 }
 
-function OffersList ({offersList, maxOffers}:OfferListProps):JSX.Element {
+function OffersList ({cityOffers, maxOffers}:OfferListProps):JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeOfferId, setActiveOfferId] = useState(offersList[0].id);
-  const selectedCity = useSelectorTyped((state)=> state.locationName);
-  const cityOffers = offersList.filter((offer)=>offer.city.name === selectedCity);
+  const [activeOfferId, setActiveOfferId] = useState(cityOffers.length ? cityOffers[0].id : -1);
 
   if (maxOffers) {
     return (
@@ -25,7 +22,6 @@ function OffersList ({offersList, maxOffers}:OfferListProps):JSX.Element {
     <>
       {cityOffers.map((offer) => (<MainPageCard key={offer.id} offerData={offer} setActiveOfferId={setActiveOfferId}/>))}
     </>);
-
 }
 
 export default OffersList;
