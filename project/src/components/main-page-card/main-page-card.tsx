@@ -1,29 +1,30 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import RouterPaths from '../../const/router-paths';
+import RouterPaths from '../../const/routerPaths';
+import { useDispatchTyped } from '../../hooks/typedWrappers';
 import apartment02Image from '../../img/apartment-02.jpg';
+import { setActiveOfferId } from '../../store/action';
 import { Offer } from '../../types/offerTypes';
 import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils';
 
 type MainPageCardProps = {
   offerData: Offer;
-  setActiveOfferId: Dispatch<SetStateAction<number>>;
 }
 
-function MainPageCard ({offerData, setActiveOfferId}:MainPageCardProps):JSX.Element {
+function MainPageCard ({offerData}:MainPageCardProps):JSX.Element {
 
   const {type, title, price, rating, id} = offerData;
+  const dispatch = useDispatchTyped();
 
-  const mouseOverHandle = () => {
-    setActiveOfferId(id);
+  const mouseEnterHandle = () => {
+    dispatch(setActiveOfferId({activeOfferId: id}));
   };
 
   const mouseLeaveHandle = () => {
-    setActiveOfferId(-1);
+    dispatch(setActiveOfferId({activeOfferId: -1}));
   };
 
   return (
-    <article onMouseOver={mouseOverHandle} onMouseLeave={mouseLeaveHandle} className="cities__card place-card">
+    <article onMouseEnter={mouseEnterHandle} onMouseLeave={mouseLeaveHandle} className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/#">
           <img className="place-card__image" src={apartment02Image} alt="Place" width={260} height={200} />

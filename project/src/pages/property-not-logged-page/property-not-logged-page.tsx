@@ -6,7 +6,7 @@ import apartment03Image from '../../img/apartment-03.jpg';
 import studio01Image from '../../img/studio-01.jpg';
 import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
 import avatarMaxImage from '../../img/avatar-max.jpg';
-import RouterPaths from '../../const/router-paths';
+import RouterPaths from '../../const/routerPaths';
 import { Link } from 'react-router-dom';
 
 

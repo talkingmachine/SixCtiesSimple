@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import RouterPaths from '../../const/router-paths';
+import RouterPaths from '../../const/routerPaths';
 import MainPage from '../../pages/main-page/main-page';
 import PropertyPage from '../../pages/property-page/property-page';
 import store from '../../store';

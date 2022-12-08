@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import RouterPaths from '../../const/router-paths';
+import RouterPaths from '../../const/routerPaths';
 
 function NotFoundPage ():JSX.Element {
   return (

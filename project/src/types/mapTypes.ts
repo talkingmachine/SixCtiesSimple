@@ -4,6 +4,7 @@ type Point = {
   lat: number;
   lng: number;
   zoom: number;
+  id?:number;
 };
 
 type City = {

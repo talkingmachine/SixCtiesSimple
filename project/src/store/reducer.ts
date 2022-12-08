@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import getCommentsList from '../mocks/comments';
 import getOffersList from '../mocks/offers';
-import { setCity, setOffersList, setCommentsList } from './action';
+import { setCity, setOffersList, setCommentsList, sortByPriceLTH, sortByPriceHTL, sortByRating, sortByPopular, setActiveOfferId} from './action';
 
 const initialState = {
   locationName: 'Paris',
@@ -10,6 +10,7 @@ const initialState = {
     commentsList: getCommentsList
   },
   currentCityOffersList: getOffersList.filter((offer)=>offer.city.name === 'Paris'),
+  activeOfferId: -1,
 };
 
 const reducer = createReducer(initialState, (builder)=>{
@@ -23,6 +24,21 @@ const reducer = createReducer(initialState, (builder)=>{
     })
     .addCase(setCommentsList, (state, action)=>{
       state.propertyData.commentsList = action.payload.commentsList;
+    })
+    .addCase(sortByPriceLTH, (state)=>{
+      state.currentCityOffersList = state.currentCityOffersList.sort((offerA, offerB) => offerA.price - offerB.price);
+    })
+    .addCase(sortByPriceHTL, (state)=>{
+      state.currentCityOffersList = state.currentCityOffersList.sort((offerA, offerB) => offerB.price - offerA.price);
+    })
+    .addCase(sortByRating, (state)=>{
+      state.currentCityOffersList = state.currentCityOffersList.sort((offerA, offerB) => offerB.rating - offerA.rating);
+    })
+    .addCase(sortByPopular, (state)=>{
+      state.currentCityOffersList = state.propertyData.offersList.filter((offer)=>offer.city.name === state.locationName);
+    })
+    .addCase(setActiveOfferId, (state, action)=>{
+      state.activeOfferId = action.payload.activeOfferId;
     });
 });
 
