@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { Point } from '../types/mapTypes';
-import { Offer } from '../types/offerCommentTypes';
+import { Offer } from '../types/offerTypes';
 
 const parseRatingToStars = (number:number):string => (`${Math.round(number) * 20}%`);
 

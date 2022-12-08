@@ -1,27 +1,27 @@
 import { useState } from 'react';
-import { Offer } from '../../types/offerCommentTypes';
+import { Offer } from '../../types/offerTypes';
 import MainPageCard from '../main-page-card/main-page-card';
 
 type OfferListProps = {
-  offersList: Offer[];
+  cityOffers: Offer[];
   maxOffers?: number;
 }
 
-function OffersList ({offersList, maxOffers}:OfferListProps):JSX.Element {
+function OffersList ({cityOffers, maxOffers}:OfferListProps):JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [activeOfferId, setActiveOfferId] = useState(offersList[0].id);
+  const [activeOfferId, setActiveOfferId] = useState(cityOffers.length ? cityOffers[0].id : -1);
+
   if (maxOffers) {
     return (
       <>
-        {offersList.slice(0, maxOffers).map((item) => (<MainPageCard key={item.id} offerData={item} setActiveOfferId={setActiveOfferId}/>))}
+        {cityOffers.slice(0, maxOffers).map((offer) => (<MainPageCard key={offer.id} offerData={offer} setActiveOfferId={setActiveOfferId}/>))}
       </>);
   }
 
   return (
     <>
-      {offersList.map((item) => (<MainPageCard key={item.id} offerData={item} setActiveOfferId={setActiveOfferId}/>))}
+      {cityOffers.map((offer) => (<MainPageCard key={offer.id} offerData={offer} setActiveOfferId={setActiveOfferId}/>))}
     </>);
-
 }
 
 export default OffersList;

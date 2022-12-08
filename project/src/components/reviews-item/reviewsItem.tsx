@@ -1,4 +1,4 @@
-import { Comment } from '../../types/offerCommentTypes';
+import { Comment } from '../../types/offerTypes';
 import { getCommentDate, parseRatingToStars, getDateTimePropertyDate } from '../../utils/utils';
 
 type ReviewsItemProps = {

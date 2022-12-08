@@ -8,18 +8,15 @@ import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/router-paths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
-import { PropertyData } from '../../types/offerCommentTypes';
 import ReviewsList from '../../components/reviews-list/reviewsList';
 import Map from '../../components/map/map';
 import { city } from '../../mocks/mapData';
 import { convertOffersToPoints } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
+import { useSelectorTyped } from '../../hooks/typedWrappers';
 
-type PropertyPageProps = {
-  propertyData: PropertyData;
-}
-
-function PropertyPage ({propertyData}: PropertyPageProps):JSX.Element {
+function PropertyPage ():JSX.Element {
+  const propertyData = useSelectorTyped((state)=> state.propertyData);
   const reviewsCount = propertyData.commentsList.length;
   const nearestOffers = propertyData.offersList.slice(0, 3); /// logic
 
@@ -175,11 +172,11 @@ function PropertyPage ({propertyData}: PropertyPageProps):JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map center={city} points={convertOffersToPoints(nearestOffers)}/>
+            <Map center={city.location} points={convertOffersToPoints(nearestOffers)}/>
           </section>
         </section>
         <div className="container">
-          <NearestPlaces offersList={propertyData.offersList} maxOffers={3}/>
+          <NearestPlaces cityOffers={propertyData.offersList} maxOffers={3}/>
         </div>
       </main>
     </div>
