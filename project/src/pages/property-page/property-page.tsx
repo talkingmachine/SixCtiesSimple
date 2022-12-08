@@ -6,7 +6,7 @@ import apartment03Image from '../../img/apartment-03.jpg';
 import studio01Image from '../../img/studio-01.jpg';
 import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
 import { Link } from 'react-router-dom';
-import RouterPaths from '../../const/router-paths';
+import RouterPaths from '../../const/routerPaths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import ReviewsList from '../../components/reviews-list/reviewsList';
 import Map from '../../components/map/map';
@@ -14,9 +14,11 @@ import { city } from '../../mocks/mapData';
 import { convertOffersToPoints } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
+import { propertyDataSelector } from '../../store/selectors';
+
 
 function PropertyPage ():JSX.Element {
-  const propertyData = useSelectorTyped((state)=> state.propertyData);
+  const propertyData = useSelectorTyped(propertyDataSelector);
   const reviewsCount = propertyData.commentsList.length;
   const nearestOffers = propertyData.offersList.slice(0, 3); /// logic
 
