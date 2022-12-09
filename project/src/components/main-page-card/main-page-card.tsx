@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
 import { useDispatchTyped } from '../../hooks/typedWrappers';
-import apartment02Image from '../../img/apartment-02.jpg';
 import { setActiveOfferId } from '../../store/action';
 import { Offer } from '../../types/offerTypes';
-import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils';
+import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils'; //возвращать скролл в начальное положение
 
 type MainPageCardProps = {
   offerData: Offer;
@@ -12,7 +11,7 @@ type MainPageCardProps = {
 
 function MainPageCard ({offerData}:MainPageCardProps):JSX.Element {
 
-  const {type, title, price, rating, id} = offerData;
+  const {type, title, price, rating, id, previewImage} = offerData;
   const dispatch = useDispatchTyped();
 
   const mouseEnterHandle = () => {
@@ -27,7 +26,7 @@ function MainPageCard ({offerData}:MainPageCardProps):JSX.Element {
     <article onMouseEnter={mouseEnterHandle} onMouseLeave={mouseLeaveHandle} className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/#">
-          <img className="place-card__image" src={apartment02Image} alt="Place" width={260} height={200} />
+          <img className="place-card__image" src={previewImage} alt="Place" width={260} height={200} />
         </a>
       </div>
       <div className="place-card__info">

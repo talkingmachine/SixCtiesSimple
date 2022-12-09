@@ -8,7 +8,6 @@ import RouterPaths from '../../const/routerPaths';
 import SortTypes from '../../const/sortTypes';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
-import { city } from '../../mocks/mapData';
 import { currentCityOffersListSelector, locationNameSelector } from '../../store/selectors';
 import { convertOffersToPoints } from '../../utils/utils';
 
@@ -23,7 +22,7 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
   const [sortType, setSortType] = useState(SortTypes.popular);
 
   const toggleSortList = () => {
-    setIsSortListOpened(!isSortListOpened);
+    setIsSortListOpened((prevState) => !prevState);
   };
 
   return (
@@ -83,7 +82,7 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" id="map">
-                <Map center={city.location} points={convertOffersToPoints(cityOffers)}/>
+                <Map points={convertOffersToPoints(cityOffers)}/>
               </section>
             </div>
           </div>
