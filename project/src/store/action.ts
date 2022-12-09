@@ -11,6 +11,7 @@ const sortByRating = createAction('SORT_BY_RATING');
 const sortByPopular = createAction('SORT_BY_POPULAR');
 const setActiveOfferId = createAction<{activeOfferId: number}>('SET_ACTIVE_OFFER_ID');
 const requireAuthorization = createAction<AuthorizationStatus>('REQUIRE_AUTHORIZATION');
+const setDataLoadedStatus = createAction<{isDataLoaded: boolean}>('SET_DATA_LOADED_STATUS');
 
 
 export {
@@ -22,5 +23,6 @@ export {
   sortByRating,
   sortByPopular,
   setActiveOfferId,
-  requireAuthorization
+  requireAuthorization,
+  setDataLoadedStatus
 };

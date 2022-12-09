@@ -6,7 +6,7 @@ import { dropToken, saveToken } from '../services/token';
 import { AuthData, UserData } from '../types/apiTypes';
 import { Offer } from '../types/offerTypes';
 import { AppDispatch, State } from '../types/reduxTypes';
-import { loadCommentsList, loadOffersList, requireAuthorization, setCity } from './action';
+import { loadCommentsList, loadOffersList, requireAuthorization, setCity, setDataLoadedStatus } from './action';
 import { Comment } from '../types/offerTypes';
 import { DEFAULT_CITY } from '../const/defaultValues';
 
@@ -14,8 +14,10 @@ const fetchOffersAction = createAsyncThunk<void, undefined, {dispatch: AppDispat
   'FETCH_OFFERS_ACTION',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Offer[]>(APIRoute.Hotels);
+    dispatch(setDataLoadedStatus({isDataLoaded: false}));
     dispatch(loadOffersList({offersList: data}));
     dispatch(setCity({locationName: DEFAULT_CITY}));
+    dispatch(setDataLoadedStatus({isDataLoaded: true}));
   }
 );
 

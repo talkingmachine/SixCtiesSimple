@@ -3,7 +3,7 @@ import AuthorizationStatus from '../const/authorizationStatus';
 import { DEFAULT_CITY } from '../const/defaultValues';
 import { Point } from '../types/mapTypes';
 import { Comment, Offer } from '../types/offerTypes';
-import { setCity, loadOffersList, loadCommentsList, sortByPriceLTH, sortByPriceHTL, sortByRating, sortByPopular, setActiveOfferId, requireAuthorization} from './action';
+import { setCity, loadOffersList, loadCommentsList, sortByPriceLTH, sortByPriceHTL, sortByRating, sortByPopular, setActiveOfferId, requireAuthorization, setDataLoadedStatus} from './action';
 
 type InitialState = {
   locationName: string;
@@ -15,6 +15,7 @@ type InitialState = {
   currentCityLocation: Point;
   activeOfferId: number;
   authorizationStatus: AuthorizationStatus;
+  isDataLoaded: boolean;
 }
 
 const initialState: InitialState = {
@@ -31,6 +32,7 @@ const initialState: InitialState = {
   },
   activeOfferId: -1,
   authorizationStatus: AuthorizationStatus.Uknown,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder)=>{
@@ -68,6 +70,9 @@ const reducer = createReducer(initialState, (builder)=>{
     })
     .addCase(requireAuthorization, (state, action)=>{
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action)=>{
+      state.isDataLoaded = action.payload.isDataLoaded;
     });
 });
 
