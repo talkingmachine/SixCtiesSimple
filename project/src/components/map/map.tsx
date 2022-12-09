@@ -5,7 +5,7 @@ import { LeafletMap, Point } from '../../types/mapTypes';
 import defaultMarkerIcon from '../../img/pin.svg';
 import activeMarkerIcon from '../../img/pin-active.svg';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
-import { activeOfferIdSelector, currentCityLocationSelector } from '../../store/selectors';
+import { activeOfferIdSelector} from '../../store/selectors';
 
 type MapProps = {
   points: Point[];
@@ -13,10 +13,9 @@ type MapProps = {
 
 function Map ({points}: MapProps):JSX.Element {
   const mapRef = useRef(null);
-  const center = useSelectorTyped(currentCityLocationSelector);
-  const map:LeafletMap = useMap(mapRef, center);
+  const map:LeafletMap = useMap(mapRef);
   const markersLayer = map ? L.layerGroup().addTo(map) : null;
-  const activeOfferId = useSelectorTyped(activeOfferIdSelector);// при смене страницы не меняется id в store
+  const activeOfferId = useSelectorTyped(activeOfferIdSelector); // при смене страницы не меняется id в store
 
   useEffect(()=>{
     const defaultMarker = new L.Icon({

@@ -40,7 +40,7 @@ const reducer = createReducer(initialState, (builder)=>{
     .addCase(setCity, (state, action)=>{
       state.locationName = action.payload.locationName;
       state.currentCityOffersList = state.propertyData.offersList.filter((offer)=>offer.city.name === action.payload.locationName);
-      const currentCity = state.currentCityOffersList[0].location;
+      const currentCity = state.currentCityOffersList[0].city.location;
       state.currentCityLocation = {
         lat: currentCity.latitude,
         lng: currentCity.longitude,
