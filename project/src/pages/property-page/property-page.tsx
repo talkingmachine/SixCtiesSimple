@@ -10,17 +10,15 @@ import RouterPaths from '../../const/routerPaths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import ReviewsList from '../../components/reviews-list/reviewsList';
 import Map from '../../components/map/map';
-import { city } from '../../mocks/mapData';
 import { convertOffersToPoints } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
-import { propertyDataSelector } from '../../store/selectors';
+import { offersListSelector } from '../../store/selectors';
 
 
 function PropertyPage ():JSX.Element {
-  const propertyData = useSelectorTyped(propertyDataSelector);
-  const reviewsCount = propertyData.commentsList.length;
-  const nearestOffers = propertyData.offersList.slice(0, 3); /// logic
+  const offersList = useSelectorTyped(offersListSelector);
+  const nearestOffers = offersList.slice(0, 3); /// logic
 
   return (
     <div className="page">
@@ -162,23 +160,23 @@ function PropertyPage ():JSX.Element {
                 A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
                   </p>
                   <p className="property__text">
-                An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the currentCity comes to rest in this alley flowery and colorful.
                   </p>
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviewsCount}</span></h2>
-                <ReviewsList commentsList={propertyData.commentsList}/>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{5}</span></h2>
+                <ReviewsList/>
                 <NewCommentForm/>
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map center={city.location} points={convertOffersToPoints(nearestOffers)}/>
+            <Map points={convertOffersToPoints(nearestOffers)}/>
           </section>
         </section>
         <div className="container">
-          <NearestPlaces cityOffers={propertyData.offersList} maxOffers={3}/>
+          <NearestPlaces cityOffers={nearestOffers} maxOffers={3}/>
         </div>
       </main>
     </div>

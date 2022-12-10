@@ -1,16 +1,38 @@
 import { createReducer } from '@reduxjs/toolkit';
-import getCommentsList from '../mocks/comments';
-import getOffersList from '../mocks/offers';
-import { setCity, setOffersList, setCommentsList, sortByPriceLTH, sortByPriceHTL, sortByRating, sortByPopular, setActiveOfferId} from './action';
+import AuthorizationStatus from '../const/authorizationStatus';
+import { DEFAULT_CITY } from '../const/defaultValues';
+import { Point } from '../types/mapTypes';
+import { Comment, Offer } from '../types/offerTypes';
+import { setCity, loadOffersList, loadCommentsList, sortByPriceLTH, sortByPriceHTL, sortByRating, sortByPopular, setActiveOfferId, requireAuthorization, setDataLoadedStatus} from './action';
 
-const initialState = {
-  locationName: 'Paris',
+type InitialState = {
+  locationName: string;
   propertyData: {
-    offersList: getOffersList,
-    commentsList: getCommentsList
+    offersList: Offer[];
+    commentsList: Comment[];
+  };
+  currentCityOffersList: Offer[];
+  currentCityLocation: Point;
+  activeOfferId: number;
+  authorizationStatus: AuthorizationStatus;
+  isDataLoaded: boolean;
+}
+
+const initialState: InitialState = {
+  locationName: DEFAULT_CITY,
+  propertyData: {
+    offersList: [],
+    commentsList: []
   },
-  currentCityOffersList: getOffersList.filter((offer)=>offer.city.name === 'Paris'),
+  currentCityOffersList: [],
+  currentCityLocation: {
+    lat: 0,
+    lng: 0,
+    zoom: 0,
+  },
   activeOfferId: -1,
+  authorizationStatus: AuthorizationStatus.Uknown,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder)=>{
@@ -18,11 +40,17 @@ const reducer = createReducer(initialState, (builder)=>{
     .addCase(setCity, (state, action)=>{
       state.locationName = action.payload.locationName;
       state.currentCityOffersList = state.propertyData.offersList.filter((offer)=>offer.city.name === action.payload.locationName);
+      const currentCity = state.currentCityOffersList[0].city.location;
+      state.currentCityLocation = {
+        lat: currentCity.latitude,
+        lng: currentCity.longitude,
+        zoom: currentCity.zoom,
+      };
     })
-    .addCase(setOffersList, (state, action)=>{
+    .addCase(loadOffersList, (state, action)=>{
       state.propertyData.offersList = action.payload.offersList;
     })
-    .addCase(setCommentsList, (state, action)=>{
+    .addCase(loadCommentsList, (state, action)=>{
       state.propertyData.commentsList = action.payload.commentsList;
     })
     .addCase(sortByPriceLTH, (state)=>{
@@ -39,6 +67,12 @@ const reducer = createReducer(initialState, (builder)=>{
     })
     .addCase(setActiveOfferId, (state, action)=>{
       state.activeOfferId = action.payload.activeOfferId;
+    })
+    .addCase(requireAuthorization, (state, action)=>{
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action)=>{
+      state.isDataLoaded = action.payload.isDataLoaded;
     });
 });
 

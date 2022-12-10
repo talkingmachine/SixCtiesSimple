@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
 import { setCity } from '../../store/action';
-import { selectedCitySelector } from '../../store/selectors';
+import { locationNameSelector } from '../../store/selectors';
 
 type LocationsListProps = {
   locationNamesList: string[];
 }
 
 function LocationsList ({locationNamesList}:LocationsListProps):JSX.Element {
-  const selectedCity = useSelectorTyped(selectedCitySelector);
+  const selectedCity = useSelectorTyped(locationNameSelector);
   const dispatch = useDispatchTyped();
 
   const onLocationClickHandle = (evt: React.MouseEvent, locationName:string) => {

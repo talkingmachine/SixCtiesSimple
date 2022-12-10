@@ -13,6 +13,7 @@ type AppProps = {
 }
 
 function App({locationNamesList}:AppProps): JSX.Element {
+
   return (
     <BrowserRouter>
       <Provider store={store}>

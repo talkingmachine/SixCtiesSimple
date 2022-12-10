@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../../components/loading-spinner/loadingSpinner';
 import LocationsList from '../../components/locations-list/locationsList';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
@@ -8,8 +9,7 @@ import RouterPaths from '../../const/routerPaths';
 import SortTypes from '../../const/sortTypes';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
-import { city } from '../../mocks/mapData';
-import { currentCityOffersListSelector, locationNameSelector } from '../../store/selectors';
+import { currentCityOffersListSelector, isDataLoadedSelector, locationNameSelector } from '../../store/selectors';
 import { convertOffersToPoints } from '../../utils/utils';
 
 type MainPageProps = {
@@ -22,8 +22,16 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
   const [isSortListOpened, setIsSortListOpened] = useState(false); //сделать закрытие по клику вне списка и смене выбранного города
   const [sortType, setSortType] = useState(SortTypes.popular);
 
+  const isDataLoaded = useSelectorTyped(isDataLoadedSelector);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingSpinner/>
+    );
+  }
+
   const toggleSortList = () => {
-    setIsSortListOpened(!isSortListOpened);
+    setIsSortListOpened((prevState) => !prevState);
   };
 
   return (
@@ -78,12 +86,14 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
                 <SortOptions isOpened={isSortListOpened} sortType={sortType} setSortType={setSortType} />
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OffersList cityOffers={cityOffers}/>
+                {!isDataLoaded ?
+                  <LoadingSpinner/> :
+                  <OffersList cityOffers={cityOffers}/>}
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" id="map">
-                <Map center={city.location} points={convertOffersToPoints(cityOffers)}/>
+                <Map points={convertOffersToPoints(cityOffers)}/>
               </section>
             </div>
           </div>
