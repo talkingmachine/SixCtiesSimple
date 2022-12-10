@@ -1,6 +1,9 @@
 type UserData = {
-  id: number;
+  avatarUrl: string;
   email: string;
+  id: number;
+  isPro: boolean;
+  name: string;
   token: string;
 }
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import HeaderProfile from '../../components/header-profile/headerProfile';
 import LoadingSpinner from '../../components/loading-spinner/loadingSpinner';
 import LocationsList from '../../components/locations-list/locationsList';
 import Map from '../../components/map/map';
@@ -49,17 +50,7 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper" />
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={RouterPaths.login}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                <HeaderProfile/>
               </ul>
             </nav>
           </div>

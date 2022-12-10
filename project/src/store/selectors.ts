@@ -8,4 +8,5 @@ export const commentsListSelector = (state: State)=> state.propertyData.comments
 export const offersListSelector = (state: State)=> state.propertyData.offersList;
 export const isDataLoadedSelector = (state: State)=> state.isDataLoaded;
 export const authorizationStatusSelector = (state: State)=> state.authorizationStatus;
+export const userDataSelector = (state: State)=> state.userData;
 

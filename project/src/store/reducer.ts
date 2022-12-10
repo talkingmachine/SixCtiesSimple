@@ -3,7 +3,19 @@ import AuthorizationStatus from '../const/authorizationStatus';
 import { DEFAULT_CITY } from '../const/defaultValues';
 import { Point } from '../types/mapTypes';
 import { Comment, Offer } from '../types/offerTypes';
-import { setCity, loadOffersList, loadCommentsList, sortByPriceLTH, sortByPriceHTL, sortByRating, sortByPopular, setActiveOfferId, requireAuthorization, setDataLoadedStatus} from './action';
+import {
+  setCity,
+  loadOffersList,
+  loadCommentsList,
+  sortByPriceLTH,
+  sortByPriceHTL,
+  sortByRating,
+  sortByPopular,
+  setActiveOfferId,
+  setAuthorizationStatus,
+  setDataLoadedStatus,
+  setUserData,
+} from './action';
 
 type InitialState = {
   locationName: string;
@@ -16,6 +28,14 @@ type InitialState = {
   activeOfferId: number;
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean;
+  userData: {
+    avatarUrl: string;
+    email: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+    token: string;
+  };
 }
 
 const initialState: InitialState = {
@@ -33,6 +53,14 @@ const initialState: InitialState = {
   activeOfferId: -1,
   authorizationStatus: AuthorizationStatus.Uknown,
   isDataLoaded: false,
+  userData:  {
+    avatarUrl: '',
+    email: '',
+    id: -1,
+    isPro: false,
+    name: '',
+    token: ''
+  },
 };
 
 const reducer = createReducer(initialState, (builder)=>{
@@ -68,11 +96,14 @@ const reducer = createReducer(initialState, (builder)=>{
     .addCase(setActiveOfferId, (state, action)=>{
       state.activeOfferId = action.payload.activeOfferId;
     })
-    .addCase(requireAuthorization, (state, action)=>{
+    .addCase(setAuthorizationStatus, (state, action)=>{
       state.authorizationStatus = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action)=>{
       state.isDataLoaded = action.payload.isDataLoaded;
+    })
+    .addCase(setUserData, (state, action)=>{
+      state.userData = action.payload;
     });
 });
 
