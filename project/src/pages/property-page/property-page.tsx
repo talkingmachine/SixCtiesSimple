@@ -17,6 +17,7 @@ import HeaderProfile from '../../components/header-profile/headerProfile';
 import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyOffersAction } from '../../store/api-actions';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { useEffect } from 'react';
+import { Offer } from '../../types/offerTypes';
 
 
 function PropertyPage ():JSX.Element {
@@ -37,7 +38,7 @@ function PropertyPage ():JSX.Element {
   const isLoaded = useSelectorTyped(isDataLoadedSelector);
   const isAuthorized = useSelectorTyped(authorizationStatusSelector);
 
-  if(isLoaded && !offersList.some((offer) => String(offer.id) === offerId) ) {
+  if(isLoaded && !offersList.some((offer: Offer) => String(offer.id) === offerId) ) {
     return <NotFoundPage/>;
   }
 
