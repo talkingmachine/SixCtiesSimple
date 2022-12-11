@@ -5,7 +5,7 @@ import RouterPaths from '../../const/routerPaths';
 import MainPage from '../../pages/main-page/main-page';
 import PropertyPage from '../../pages/property-page/property-page';
 import store from '../../store';
-import NotFoundPage from '../not-found-page/not-found-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 const LoginPage = React.lazy(() => import ('../../pages/login-page/login-page'));
 
 type AppProps = {
@@ -21,7 +21,7 @@ function App({locationNamesList}:AppProps): JSX.Element {
           <Route path={RouterPaths.main} element={<MainPage locationNamesList={locationNamesList}/>} />
           <Route path={RouterPaths.login} element={<Suspense fallback={<span>Loading...</span>}><LoginPage/></Suspense>} />
           <Route path={`${RouterPaths.offer}:id`} element={<PropertyPage/>} />
-          <Route path={'*'} element={<NotFoundPage/>} />
+          <Route path={RouterPaths.notFound} element={<NotFoundPage/>} />
         </Routes>
       </Provider>
     </BrowserRouter>

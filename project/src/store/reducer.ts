@@ -15,9 +15,11 @@ import {
   setAuthorizationStatus,
   setDataLoadedStatus,
   setUserData,
+  setCurrentOffer,
+  setNearbyOffers,
 } from './action';
 
-type InitialState = {
+export type InitialState = {
   locationName: string;
   propertyData: {
     offersList: Offer[];
@@ -25,6 +27,8 @@ type InitialState = {
   };
   currentCityOffersList: Offer[];
   currentCityLocation: Point;
+  currentOffer: Offer | null;
+  nearbyOffers: Offer[];
   activeOfferId: number;
   authorizationStatus: AuthorizationStatus;
   isDataLoaded: boolean;
@@ -50,6 +54,8 @@ const initialState: InitialState = {
     lng: 0,
     zoom: 0,
   },
+  currentOffer: null,
+  nearbyOffers: [],
   activeOfferId: -1,
   authorizationStatus: AuthorizationStatus.Uknown,
   isDataLoaded: false,
@@ -104,8 +110,14 @@ const reducer = createReducer(initialState, (builder)=>{
     })
     .addCase(setUserData, (state, action)=>{
       state.userData = action.payload;
+    })
+    .addCase(setCurrentOffer, (state, action)=>{
+      state.currentOffer = action.payload;
+    })
+    .addCase(setNearbyOffers, (state, action)=>{
+      state.nearbyOffers = action.payload;
     });
 });
 
-export default reducer;
+export {reducer};
 

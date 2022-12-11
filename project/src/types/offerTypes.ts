@@ -47,5 +47,9 @@ type PropertyData = {
   offersList: Offer[];
   commentsList: Comment[];
 }
+type NewComment = {
+  comment: string;
+  rating: number;
+}
 
-export type {Comment, Offer, PropertyData};
+export type {Comment, Offer, PropertyData, NewComment};

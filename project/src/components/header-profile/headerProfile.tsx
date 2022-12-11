@@ -1,14 +1,19 @@
 import { Link } from 'react-router-dom';
-import AuthorizationStatus from '../../const/authorizationStatus';
 import RouterPaths from '../../const/routerPaths';
-import { useSelectorTyped } from '../../hooks/typedWrappers';
+import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
+import { logoutAction } from '../../store/api-actions';
 import { authorizationStatusSelector, userDataSelector } from '../../store/selectors';
 
 const HeaderProfile = (): JSX.Element => {
-  const isAuthorized = useSelectorTyped(authorizationStatusSelector) === AuthorizationStatus.Auth;
+  const isAuthorized = useSelectorTyped(authorizationStatusSelector);
   const userData = useSelectorTyped(userDataSelector);
+  const dispatch = useDispatchTyped();
 
   if (isAuthorized) {
+    const signOutClickHandle = () => {
+      dispatch(logoutAction());
+    };
+
     return (
       <>
         <li className="header__nav-item user">
@@ -18,21 +23,21 @@ const HeaderProfile = (): JSX.Element => {
           </div>
         </li>
         <li className="header__nav-item">
-          <Link className="header__nav-link" to={RouterPaths.login}>
+          <Link onClick={signOutClickHandle} className="header__nav-link" to={RouterPaths.login}>
             <span className="header__signout">Sign out</span>
           </Link>
         </li>
       </>
     );
-  } else {
-    return (
-      <li className="header__nav-item user">
-        <Link className="header__nav-link header__nav-link--profile" to={RouterPaths.login}>
-          <div className="header__avatar-wrapper user__avatar-wrapper" />
-          <span className="header__login">Sign in</span>
-        </Link>
-      </li>);
   }
+
+  return (
+    <li className="header__nav-item user">
+      <Link className="header__nav-link header__nav-link--profile" to={RouterPaths.login}>
+        <div className="header__avatar-wrapper user__avatar-wrapper" />
+        <span className="header__login">Sign in</span>
+      </Link>
+    </li>);
 };
 
 export default HeaderProfile;

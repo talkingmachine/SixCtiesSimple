@@ -77,9 +77,7 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
                 <SortOptions isOpened={isSortListOpened} sortType={sortType} setSortType={setSortType} />
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {!isDataLoaded ?
-                  <LoadingSpinner/> :
-                  <OffersList cityOffers={cityOffers}/>}
+                <OffersList cityOffers={cityOffers}/>
               </div>
             </section>
             <div className="cities__right-section">
