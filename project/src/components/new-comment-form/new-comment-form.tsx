@@ -1,6 +1,14 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
+import { useDispatchTyped } from '../../hooks/typedWrappers';
+import { fetchNewCommentAction } from '../../store/api-actions';
 
-function NewCommentForm ():JSX.Element {
+type NewCommentFormProps = {
+  id: string | undefined;
+}
+
+function NewCommentForm ({id}: NewCommentFormProps):JSX.Element {
+  const dispatch = useDispatchTyped();
+
   const [newCommentFormData, setNewCommentFormData] = useState({
     rating: '',
     review: '',
@@ -17,9 +25,18 @@ function NewCommentForm ():JSX.Element {
     setNewCommentFormData({...newCommentFormData, [name]: value});
   };
 
+  const commentSubmitButtonHandle = (evt: FormEvent<HTMLFormElement>) => { // как понять что нужен именно FormEvent<HTMLFormElement>? Как подобрать нужный тип под ивент?
+    evt.preventDefault();
+    if (id) {
+      dispatch(fetchNewCommentAction({newComment: {
+        rating: +newCommentFormData.rating,
+        comment: newCommentFormData.review
+      }, offerId: id,}));
+    } // сделать ресет формы
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form onSubmit={commentSubmitButtonHandle} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         <input onChange={fieldChangeHandle} className="form__rating-input visually-hidden" name="rating" checked={newCommentFormData.rating === '5'} defaultValue={5} id="5-stars" type="radio" />
@@ -58,7 +75,7 @@ function NewCommentForm ():JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit">Submit</button>
       </div>
     </form>
   );

@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createAPI from '../services/axios-api';
-import reducer from './reducer';
+import { reducer } from './reducer';
 
 const api = createAPI();
 

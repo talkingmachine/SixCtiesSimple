@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import AuthorizationStatus from '../const/authorizationStatus';
-import { UserData } from '../types/apiTypes';
+import { UserData } from '../types/APITypes';
 import { Comment, Offer } from '../types/offerTypes';
 
 export const setCity = createAction<{locationName: string }>('SET_CITY');
@@ -14,3 +14,5 @@ export const setActiveOfferId = createAction<{activeOfferId: number}>('SET_ACTIV
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('REQUIRE_AUTHORIZATION');
 export const setDataLoadedStatus = createAction<{isDataLoaded: boolean}>('SET_DATA_LOADED_STATUS');
 export const setUserData = createAction<UserData>('SET_USER_DATA');
+export const setCurrentOffer = createAction<Offer>('SET_CURRENT_OFFER');
+export const setNearbyOffers = createAction<Offer[]>('SET_NearbyOffers');

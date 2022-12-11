@@ -5,7 +5,7 @@ import RouterPaths from '../../const/routerPaths';
 import MainPage from '../../pages/main-page/main-page';
 import PropertyPage from '../../pages/property-page/property-page';
 import store from '../../store';
-import NotFoundPage from '../not-found-page/not-found-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 const LoginPage = React.lazy(() => import ('../../pages/login-page/login-page'));
 
 type AppProps = {

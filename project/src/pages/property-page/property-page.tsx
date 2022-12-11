@@ -4,22 +4,42 @@ import apartment01Image from '../../img/apartment-01.jpg';
 import apartment02Image from '../../img/apartment-02.jpg';
 import apartment03Image from '../../img/apartment-03.jpg';
 import studio01Image from '../../img/studio-01.jpg';
-import avatarAngelinaImage from '../../img/avatar-angelina.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import ReviewsList from '../../components/reviews-list/reviewsList';
 import Map from '../../components/map/map';
 import { convertOffersToPoints } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
-import { useSelectorTyped } from '../../hooks/typedWrappers';
-import { offersListSelector } from '../../store/selectors';
+import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
+import { authorizationStatusSelector, currentOfferSelector, isDataLoadedSelector, nearbyOffersSelector, offersListSelector} from '../../store/selectors';
 import HeaderProfile from '../../components/header-profile/headerProfile';
+import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyOffersAction } from '../../store/api-actions';
+import NotFoundPage from '../not-found-page/not-found-page';
+import { useEffect } from 'react';
 
 
 function PropertyPage ():JSX.Element {
+  const offerId = useParams().id;
+  const dispatch = useDispatchTyped();
+
+  useEffect(() => {
+    if (offerId) {
+      dispatch(fetchCurrentOfferAction({offerId}));
+      dispatch(fetchCommentsAction({offerId}));
+      dispatch(fetchNearbyOffersAction({offerId}));
+    }
+  }, [dispatch, offerId]);
+
+  const currentOffer = useSelectorTyped(currentOfferSelector);
+  const nearbyOffers = useSelectorTyped(nearbyOffersSelector);
   const offersList = useSelectorTyped(offersListSelector);
-  const nearestOffers = offersList.slice(0, 3); /// logic
+  const isLoaded = useSelectorTyped(isDataLoadedSelector);
+  const isAuthorized = useSelectorTyped(authorizationStatusSelector);
+
+  if(isLoaded && !offersList.some((offer) => String(offer.id) === offerId) ) {
+    return <NotFoundPage/>;
+  }
 
   return (
     <div className="page">
@@ -137,7 +157,7 @@ function PropertyPage ():JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={avatarAngelinaImage} alt="Host avatar" width={74} height={74} />
+                    <img className="property__avatar user__avatar" src={currentOffer?.host.avatarUrl} alt="Host avatar" width={74} height={74} />
                   </div>
                   <span className="property__user-name">
                 Angelina
@@ -158,16 +178,16 @@ function PropertyPage ():JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews · <span className="reviews__amount">{5}</span></h2>
                 <ReviewsList/>
-                <NewCommentForm/>
+                {isAuthorized ? <NewCommentForm id={offerId}/> : null}
               </section>
             </div>
           </div>
           <section className="property__map map">
-            <Map points={convertOffersToPoints(nearestOffers)}/>
+            <Map points={convertOffersToPoints(nearbyOffers)}/>
           </section>
         </section>
         <div className="container">
-          <NearestPlaces cityOffers={nearestOffers} maxOffers={3}/>
+          <NearestPlaces nearbyOffers={nearbyOffers}/>
         </div>
       </main>
     </div>
