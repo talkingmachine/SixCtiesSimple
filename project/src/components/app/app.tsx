@@ -21,7 +21,7 @@ function App({locationNamesList}:AppProps): JSX.Element {
           <Route path={RouterPaths.main} element={<MainPage locationNamesList={locationNamesList}/>} />
           <Route path={RouterPaths.login} element={<Suspense fallback={<span>Loading...</span>}><LoginPage/></Suspense>} />
           <Route path={`${RouterPaths.offer}:id`} element={<PropertyPage/>} />
-          <Route path={'*'} element={<NotFoundPage/>} />
+          <Route path={RouterPaths.notFound} element={<NotFoundPage/>} />
         </Routes>
       </Provider>
     </BrowserRouter>
