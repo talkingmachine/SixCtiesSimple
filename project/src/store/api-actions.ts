@@ -95,9 +95,9 @@ export const loginAction = createAsyncThunk<void, AuthData, ThunkConfig>(
   'LOGIN_ACTION',
   async ({login: email, password}, {dispatch, extra: api}) => {
     try {
-      const {data: userData} = await api.post<UserData>(APIRoute.Login(), {email, password});
-      saveToken(userData.token);
-      dispatch(setUserData(userData));
+      const {data} = await api.post<UserData>(APIRoute.Login(), {email, password});
+      saveToken(data.token);
+      dispatch(setUserData(data));
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch {
     //
@@ -109,7 +109,7 @@ export const logoutAction = createAsyncThunk<void, undefined, ThunkConfig>(
   'LOGIN_ACTION',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      await api.delete(APIRoute.Logout());
+      await api.delete<undefined>(APIRoute.Logout());
       dropToken();
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     } catch {
