@@ -3,6 +3,7 @@ import roomImage from '../../img/room.jpg';
 import apartment01Image from '../../img/apartment-01.jpg';
 import apartment02Image from '../../img/apartment-02.jpg';
 import apartment03Image from '../../img/apartment-03.jpg';
+import avatarDefault from '../../img/avatar.svg';
 import studio01Image from '../../img/studio-01.jpg';
 import { Link, useParams } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
@@ -12,16 +13,16 @@ import Map from '../../components/map/map';
 import { convertOffersToPoints } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
-import { authorizationStatusSelector, currentOfferSelector, isDataLoadedSelector, nearbyOffersSelector, offersListSelector} from '../../store/selectors';
+import { authorizationStatusSelector, commentsListSelector, currentOfferSelector, isDataLoadedSelector, nearbyOffersSelector, offersListSelector} from '../../store/selectors';
 import HeaderProfile from '../../components/header-profile/headerProfile';
-import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyOffersAction } from '../../store/api-actions';
-import NotFoundPage from '../not-found-page/not-found-page';
+import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyOffersAction } from '../../store/apiActions';
+import NotFoundPage from '../not-found-page/notFoundPage';
 import { useEffect } from 'react';
 import { Offer } from '../../types/offerTypes';
 
 
 function PropertyPage ():JSX.Element {
-  const offerId = useParams().id;
+  const {id: offerId} = useParams();
   const dispatch = useDispatchTyped();
 
   useEffect(() => {
@@ -33,6 +34,8 @@ function PropertyPage ():JSX.Element {
   }, [dispatch, offerId]);
 
   const currentOffer = useSelectorTyped(currentOfferSelector);
+  const commentsList = useSelectorTyped(commentsListSelector);
+
   const nearbyOffers = useSelectorTyped(nearbyOffersSelector);
   const offersList = useSelectorTyped(offersListSelector);
   const isLoaded = useSelectorTyped(isDataLoadedSelector);
@@ -158,7 +161,7 @@ function PropertyPage ():JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={currentOffer?.host.avatarUrl} alt="Host avatar" width={74} height={74} />
+                    <img className="property__avatar user__avatar" src={currentOffer?.host.avatarUrl || avatarDefault} alt="Host avatar" width={74} height={74} />
                   </div>
                   <span className="property__user-name">
                 Angelina
@@ -177,9 +180,9 @@ function PropertyPage ():JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{5}</span></h2>
+                <h2 className="reviews__title">Reviews · <span className="reviews__amount">{commentsList.length}</span></h2>
                 <ReviewsList/>
-                {isAuthorized ? <NewCommentForm id={offerId}/> : null}
+                {isAuthorized ? <NewCommentForm id={offerId} /> : null}
               </section>
             </div>
           </div>

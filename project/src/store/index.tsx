@@ -1,16 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createAPI from '../services/axios-api';
-import { reducer } from './reducer';
+import { rootReducer } from './rootReducer';
 
 const api = createAPI();
 
 const store = configureStore({
-  reducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: {
         extraArgument: api
       },
+      serializableCheck: false,
     }),
 });
 

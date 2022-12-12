@@ -20,10 +20,11 @@ type MainPageProps = {
 function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
   const selectedCity = useSelectorTyped(locationNameSelector);
   const cityOffers = useSelectorTyped(currentCityOffersListSelector);
+
   const [isSortListOpened, setIsSortListOpened] = useState(false); //сделать закрытие по клику вне списка и смене выбранного города
   const [sortType, setSortType] = useState(SortTypes.popular);
-
   const isDataLoaded = useSelectorTyped(isDataLoadedSelector);
+
 
   if (!isDataLoaded) {
     return (

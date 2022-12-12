@@ -1,4 +1,4 @@
-type Comment = {
+export type Comment = {
   'comment': string;
   'date': string;
   'id': number;
@@ -10,7 +10,7 @@ type Comment = {
     'name': string;
   };
 }
-type Offer = {
+export type Offer = {
   'bedrooms': number;
   'city': {
     'location': {
@@ -43,13 +43,11 @@ type Offer = {
   'title': string;
   'type': string;
 }
-type PropertyData = {
+export type PropertyData = {
   offersList: Offer[];
   commentsList: Comment[];
 }
-type NewComment = {
+export type NewComment = {
   comment: string;
   rating: number;
 }
-
-export type {Comment, Offer, PropertyData, NewComment};

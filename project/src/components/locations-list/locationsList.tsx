@@ -1,6 +1,7 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
-import { setCity } from '../../store/action';
+import { setLocationName } from '../../store/data-slice/dataSlice';
 import { locationNameSelector } from '../../store/selectors';
 
 type LocationsListProps = {
@@ -13,7 +14,7 @@ function LocationsList ({locationNamesList}:LocationsListProps):JSX.Element {
 
   const onLocationClickHandle = (evt: React.MouseEvent, locationName:string) => {
     evt.preventDefault();
-    dispatch(setCity({locationName: locationName }));
+    dispatch(setLocationName({locationName: locationName }));
   };
 
   return (
@@ -21,7 +22,10 @@ function LocationsList ({locationNamesList}:LocationsListProps):JSX.Element {
       <ul className="locations__list tabs__list">
         {locationNamesList.map((locationName) => (
           <li key={locationName} className="locations__item">
-            <a onClick={(e) => onLocationClickHandle(e, locationName)} className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': selectedCity === locationName})} href="/#">
+            <a onClick={(e) => onLocationClickHandle(e, locationName)}
+              className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': selectedCity === locationName})}
+              href="/#"
+            >
               <span>{locationName}</span>
             </a>
           </li>
@@ -31,4 +35,4 @@ function LocationsList ({locationNamesList}:LocationsListProps):JSX.Element {
   );
 }
 
-export default LocationsList;
+export default memo(LocationsList);

@@ -11,7 +11,12 @@ function ReviewsItem ({commentData}: ReviewsItemProps):JSX.Element {
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatarUrl} alt="Reviews avatar" width={54} height={54} />
+          <img className="reviews__avatar user__avatar"
+            src={user.avatarUrl}
+            alt="Reviews avatar"
+            width={54}
+            height={54}
+          />
         </div>
         <span className="reviews__user-name">
           {user.name}
@@ -27,7 +32,9 @@ function ReviewsItem ({commentData}: ReviewsItemProps):JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime={getDateTimePropertyDate(date)}>{getCommentDate(date)}</time>
+        <time className="reviews__time" dateTime={getDateTimePropertyDate(date)}>
+          {getCommentDate(date)}
+        </time>
       </div>
     </li>
   );

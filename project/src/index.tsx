@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { locationNamesList } from './const/locationNamesList';
 import store from './store';
-import { checkAuthAction, fetchOffersAction } from './store/api-actions';
+import { checkAuthAction, fetchOffersAction } from './store/apiActions';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
