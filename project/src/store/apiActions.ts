@@ -15,7 +15,7 @@ type ThunkConfig = {
   extra:AxiosInstance;
 }
 
-export const fetchOffersAction = createAsyncThunk<Offer[], undefined, ThunkConfig>(
+export const fetchOffersAction = createAsyncThunk<Offer[], {isAppStarts: boolean} | undefined, ThunkConfig>(
   'FETCH_OFFERS_ACTION',
   async (_arg, {extra: api, rejectWithValue}) => {
     try {
@@ -27,6 +27,7 @@ export const fetchOffersAction = createAsyncThunk<Offer[], undefined, ThunkConfi
     }
   }
 );
+
 
 export const fetchCommentsAction = createAsyncThunk<Comment[], {offerId: string}, ThunkConfig>(
   'FETCH_COMMENTS_ACTION',

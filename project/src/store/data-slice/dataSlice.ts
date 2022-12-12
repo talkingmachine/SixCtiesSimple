@@ -14,7 +14,7 @@ type InitialState = {
     commentsList: Comment[];
   };
   nearbyOffers: Offer[];
-  isDataLoaded: boolean;
+  isDataLoading: boolean;
 }
 
 const initialState: InitialState = {
@@ -30,15 +30,16 @@ const initialState: InitialState = {
     commentsList: []
   },
   nearbyOffers: [],
-  isDataLoaded: false,
+  isDataLoading: false,
 };
+
 
 export const dataSlice = createSlice({
   name: ReducerNameSpaces.data,
   initialState,
   reducers: {
     setCurrentCityLocation: (state) => {
-      const cityPoint = state.currentCityOffersList[0].location;
+      const cityPoint = state.currentCityOffersList[0].city.location;
       state.currentCityLocation = {
         lat: cityPoint.latitude,
         lng: cityPoint.longitude,
@@ -47,6 +48,8 @@ export const dataSlice = createSlice({
     },
     setLocationName: (state, action: PayloadAction<{locationName: string}>) => {
       state.locationName = action.payload.locationName;
+      dataSlice.caseReducers.sortByPopular(state); // выглядит странно, но других валидных методов не обнаружил
+      dataSlice.caseReducers.setCurrentCityLocation(state);
     },
     sortByPriceLTH: (state) => {
       state.currentCityOffersList = state.currentCityOffersList.sort((offerA, offerB) => offerA.price - offerB.price);
@@ -64,11 +67,17 @@ export const dataSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
-        state.isDataLoaded = true;
+        state.isDataLoading = true;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
-        state.isDataLoaded = false;
-        state.propertyData.offersList = action.payload;
+        state.isDataLoading = false;
+        if (action.meta.arg && action.meta.arg.isAppStarts) {
+          state.propertyData.offersList = action.payload;
+          dataSlice.caseReducers.sortByPopular(state);
+          dataSlice.caseReducers.setCurrentCityLocation(state);
+        } else {
+          state.propertyData.offersList = action.payload;
+        }
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;

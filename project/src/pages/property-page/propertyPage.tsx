@@ -13,7 +13,7 @@ import Map from '../../components/map/map';
 import { convertOffersToPoints } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
-import { authorizationStatusSelector, commentsListSelector, currentOfferSelector, isDataLoadedSelector, nearbyOffersSelector, offersListSelector} from '../../store/selectors';
+import { authorizationStatusSelector, commentsListSelector, currentOfferSelector, isDataLoadingSelector, nearbyOffersSelector, offersListSelector} from '../../store/selectors';
 import HeaderProfile from '../../components/header-profile/headerProfile';
 import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyOffersAction } from '../../store/apiActions';
 import NotFoundPage from '../not-found-page/notFoundPage';
@@ -38,7 +38,7 @@ function PropertyPage ():JSX.Element {
 
   const nearbyOffers = useSelectorTyped(nearbyOffersSelector);
   const offersList = useSelectorTyped(offersListSelector);
-  const isLoaded = useSelectorTyped(isDataLoadedSelector);
+  const isLoaded = useSelectorTyped(isDataLoadingSelector);
   const isAuthorized = useSelectorTyped(authorizationStatusSelector);
 
   if(isLoaded && !offersList.some((offer: Offer) => String(offer.id) === offerId) ) {

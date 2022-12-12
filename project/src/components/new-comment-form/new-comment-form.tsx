@@ -19,7 +19,6 @@ const initialState = {
 
 function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
   const dispatch = useDispatchTyped();
-
   const [newCommentFormData, setNewCommentFormData] = useState(initialState);
 
   const fieldChangeHandle = (evt: fieldChangeHandleEvt) => {
@@ -34,7 +33,8 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
         rating: +newCommentFormData.rating,
         comment: newCommentFormData.review
       }, offerId: id,}));
-    } // сделать ресет формы
+      setNewCommentFormData(initialState);
+    }
   };
 
   return (
@@ -117,9 +117,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set
-          <span className="reviews__star">rating</span>
-          and describe your stay with at least
-          <b className="reviews__text-amount">50 characters</b>.
+          <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit">Submit</button>
       </div>
