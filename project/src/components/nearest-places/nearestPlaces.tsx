@@ -5,7 +5,7 @@ type NearestPlacesProps = {
   nearbyOffers: Offer[];
 }
 
-function NearestPlaces({nearbyOffers}:NearestPlacesProps) {
+function NearestPlaces({nearbyOffers}: NearestPlacesProps) {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>

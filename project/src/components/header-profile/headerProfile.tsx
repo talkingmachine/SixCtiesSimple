@@ -1,14 +1,14 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
-import { logoutAction } from '../../store/api-actions';
+import { logoutAction } from '../../store/apiActions';
 import { authorizationStatusSelector, userDataSelector } from '../../store/selectors';
 
 const HeaderProfile = (): JSX.Element => {
   const isAuthorized = useSelectorTyped(authorizationStatusSelector);
   const userData = useSelectorTyped(userDataSelector);
   const dispatch = useDispatchTyped();
-
   if (isAuthorized) {
     const signOutClickHandle = () => {
       dispatch(logoutAction());
@@ -40,4 +40,4 @@ const HeaderProfile = (): JSX.Element => {
     </li>);
 };
 
-export default HeaderProfile;
+export default memo(HeaderProfile);

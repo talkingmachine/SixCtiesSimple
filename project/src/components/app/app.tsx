@@ -1,12 +1,12 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
-import MainPage from '../../pages/main-page/main-page';
-import PropertyPage from '../../pages/property-page/property-page';
+import MainPage from '../../pages/main-page/mainPage';
 import store from '../../store';
-import NotFoundPage from '../../pages/not-found-page/not-found-page';
-const LoginPage = React.lazy(() => import ('../../pages/login-page/login-page'));
+const PropertyPage = lazy(() => import ('../../pages/property-page/propertyPage'));
+const NotFoundPage = lazy(() => import ('../../pages/not-found-page/notFoundPage'));
+const LoginPage = lazy(() => import ('../../pages/login-page/loginPage'));
 
 type AppProps = {
   locationNamesList: string[];
@@ -20,8 +20,8 @@ function App({locationNamesList}:AppProps): JSX.Element {
         <Routes>
           <Route path={RouterPaths.main} element={<MainPage locationNamesList={locationNamesList}/>} />
           <Route path={RouterPaths.login} element={<Suspense fallback={<span>Loading...</span>}><LoginPage/></Suspense>} />
-          <Route path={`${RouterPaths.offer}:id`} element={<PropertyPage/>} />
-          <Route path={RouterPaths.notFound} element={<NotFoundPage/>} />
+          <Route path={`${RouterPaths.offer}:id`} element={<Suspense fallback={<span>Loading...</span>}><PropertyPage/></Suspense>}/>
+          <Route path={RouterPaths.notFound} element={<Suspense fallback={<span>Loading...</span>}><NotFoundPage/></Suspense>} />
         </Routes>
       </Provider>
     </BrowserRouter>

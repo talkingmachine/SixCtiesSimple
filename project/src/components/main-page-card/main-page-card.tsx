@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
 import { useDispatchTyped } from '../../hooks/typedWrappers';
-import { setActiveOfferId } from '../../store/action';
+import { setActiveOfferId } from '../../store/user-interaction-slice/userInteractionSlice';
 import { Offer } from '../../types/offerTypes';
 import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils'; //возвращать скролл в начальное положение
 

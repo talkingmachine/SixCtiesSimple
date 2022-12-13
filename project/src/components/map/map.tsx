@@ -48,6 +48,6 @@ function Map ({points}: MapProps):JSX.Element {
   return (
     <div style={{height: '100%'}} ref={mapRef}>
     </div>);
-} // заменить style
+}
 
 export default Map;

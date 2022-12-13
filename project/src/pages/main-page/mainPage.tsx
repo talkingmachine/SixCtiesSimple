@@ -10,7 +10,7 @@ import RouterPaths from '../../const/routerPaths';
 import SortTypes from '../../const/sortTypes';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
-import { currentCityOffersListSelector, isDataLoadedSelector, locationNameSelector } from '../../store/selectors';
+import { currentCityOffersListSelector, isDataLoadingSelector, locationNameSelector } from '../../store/selectors';
 import { convertOffersToPoints } from '../../utils/utils';
 
 type MainPageProps = {
@@ -20,12 +20,12 @@ type MainPageProps = {
 function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
   const selectedCity = useSelectorTyped(locationNameSelector);
   const cityOffers = useSelectorTyped(currentCityOffersListSelector);
+
   const [isSortListOpened, setIsSortListOpened] = useState(false); //сделать закрытие по клику вне списка и смене выбранного города
   const [sortType, setSortType] = useState(SortTypes.popular);
+  const isDataLoading = useSelectorTyped(isDataLoadingSelector);
 
-  const isDataLoaded = useSelectorTyped(isDataLoadedSelector);
-
-  if (!isDataLoaded) {
+  if (isDataLoading) {
     return (
       <LoadingSpinner/>
     );
