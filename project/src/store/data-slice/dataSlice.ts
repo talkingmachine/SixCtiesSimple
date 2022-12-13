@@ -48,8 +48,11 @@ export const dataSlice = createSlice({
     },
     setLocationName: (state, action: PayloadAction<{locationName: string}>) => {
       state.locationName = action.payload.locationName;
-      dataSlice.caseReducers.sortByPopular(state); // выглядит странно, но других валидных методов не обнаружил
-      dataSlice.caseReducers.setCurrentCityLocation(state);
+      const isOffersListExist = state.propertyData.offersList.length !== 0;
+      if (isOffersListExist) {
+        dataSlice.caseReducers.sortByPopular(state);
+        dataSlice.caseReducers.setCurrentCityLocation(state);
+      }
     },
     sortByPriceLTH: (state) => {
       state.currentCityOffersList = state.currentCityOffersList.sort((offerA, offerB) => offerA.price - offerB.price);
@@ -73,11 +76,14 @@ export const dataSlice = createSlice({
         state.isDataLoading = false;
         if (action.meta.arg && action.meta.arg.isAppStarts) {
           state.propertyData.offersList = action.payload;
-          dataSlice.caseReducers.sortByPopular(state);
+          dataSlice.caseReducers.sortByPopular(state); // выглядит странно, но пока самый валидный вариант
           dataSlice.caseReducers.setCurrentCityLocation(state);
         } else {
           state.propertyData.offersList = action.payload;
         }
+      })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isDataLoading = false;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;

@@ -1,39 +1,30 @@
-import { useState } from 'react';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import CitiesEmpty from '../../components/cities-empty/citiesEmpty';
+import Cities from '../../components/cities/cities';
 import HeaderProfile from '../../components/header-profile/headerProfile';
 import LoadingSpinner from '../../components/loading-spinner/loadingSpinner';
 import LocationsList from '../../components/locations-list/locationsList';
-import Map from '../../components/map/map';
-import OffersList from '../../components/offers-list/offers-list';
-import SortOptions from '../../components/sort-options/sortOptions';
 import RouterPaths from '../../const/routerPaths';
-import SortTypes from '../../const/sortTypes';
+
 import { useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
-import { currentCityOffersListSelector, isDataLoadingSelector, locationNameSelector } from '../../store/selectors';
-import { convertOffersToPoints } from '../../utils/utils';
+import { currentCityOffersListSelector, isDataLoadingSelector } from '../../store/selectors';
 
 type MainPageProps = {
   locationNamesList: string[];
 }
 
 function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
-  const selectedCity = useSelectorTyped(locationNameSelector);
-  const cityOffers = useSelectorTyped(currentCityOffersListSelector);
-
-  const [isSortListOpened, setIsSortListOpened] = useState(false); //сделать закрытие по клику вне списка и смене выбранного города
-  const [sortType, setSortType] = useState(SortTypes.popular);
   const isDataLoading = useSelectorTyped(isDataLoadingSelector);
+  const cityOffers = useSelectorTyped(currentCityOffersListSelector);
+  const isCityOffersExist = cityOffers.length !== 0;
 
   if (isDataLoading) {
     return (
       <LoadingSpinner/>
     );
   }
-
-  const toggleSortList = () => {
-    setIsSortListOpened((prevState) => !prevState);
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -56,36 +47,13 @@ function MainPage ({locationNamesList}:MainPageProps):JSX.Element {
           </div>
         </div>
       </header>
-      <main className="page__main page__main--index">
+      <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': !isCityOffersExist})}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <LocationsList locationNamesList={locationNamesList}/>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{cityOffers.length} places to stay in {selectedCity}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by </span>
-                <span onClick={toggleSortList} className="places__sorting-type" tabIndex={0}>
-                  {sortType}
-                  <svg className="places__sorting-arrow" width={7} height={4}>
-                    <use xlinkHref="#icon-arrow-select" />
-                  </svg>
-                </span>
-                <SortOptions isOpened={isSortListOpened} sortType={sortType} setSortType={setSortType} />
-              </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OffersList cityOffers={cityOffers}/>
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map" id="map">
-                <Map points={convertOffersToPoints(cityOffers)}/>
-              </section>
-            </div>
-          </div>
+          {isCityOffersExist ? <Cities cityOffers={cityOffers}/> : <CitiesEmpty/>}
         </div>
       </main>
     </div>);
