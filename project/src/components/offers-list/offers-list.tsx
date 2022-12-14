@@ -6,7 +6,7 @@ type OfferListProps = {
 }
 
 function OffersList ({cityOffers}:OfferListProps):JSX.Element {
-  return ( // В типе "Element[]" отсутствуют следующие свойства из типа "ReactElement<any, any>": type, props, key
+  return (
     <>
       {cityOffers.map((offer) => (<MainPageCard key={offer.id} offerData={offer}/>))}
     </>);

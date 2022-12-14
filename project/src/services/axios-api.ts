@@ -1,4 +1,5 @@
-import axios, {AxiosInstance, AxiosRequestConfig} from 'axios';
+import axios, {AxiosError, AxiosInstance, AxiosRequestConfig} from 'axios';
+import { toast } from 'react-toastify';
 import { getToken } from './token';
 
 const BASE_URL = 'https://11.react.pages.academy/six-cities-simple';
@@ -17,6 +18,17 @@ const createAPI = ():AxiosInstance => {
     }
     return config;
   });
+
+  api.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError<{error: string}>) => {
+      if (error.response) {
+        toast.warn(error.response.data.error);
+
+      }
+      throw error;
+    }
+  );
 
   return api;
 };

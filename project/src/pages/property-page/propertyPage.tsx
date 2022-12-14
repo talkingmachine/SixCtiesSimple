@@ -1,16 +1,11 @@
 import logoImage from '../../img/logo.svg';
-import roomImage from '../../img/room.jpg';
-import apartment01Image from '../../img/apartment-01.jpg';
-import apartment02Image from '../../img/apartment-02.jpg';
-import apartment03Image from '../../img/apartment-03.jpg';
 import avatarDefault from '../../img/avatar.svg';
-import studio01Image from '../../img/studio-01.jpg';
 import { Link, useParams } from 'react-router-dom';
 import RouterPaths from '../../const/routerPaths';
 import NewCommentForm from '../../components/new-comment-form/new-comment-form';
 import ReviewsList from '../../components/reviews-list/reviewsList';
 import Map from '../../components/map/map';
-import { convertOffersToPoints } from '../../utils/utils';
+import { convertOffersToPoints, parseRatingToStars } from '../../utils/utils';
 import NearestPlaces from '../../components/nearest-places/nearestPlaces';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
 import { authorizationStatusSelector, commentsListSelector, currentOfferSelector, isDataLoadingSelector, nearbyOffersSelector, offersListSelector} from '../../store/selectors';
@@ -19,6 +14,8 @@ import { fetchCommentsAction, fetchCurrentOfferAction, fetchNearbyOffersAction }
 import NotFoundPage from '../not-found-page/notFoundPage';
 import { useEffect } from 'react';
 import { Offer } from '../../types/offerTypes';
+import classNames from 'classnames';
+import { HousingType } from '../../const/housingType';
 
 
 function PropertyPage ():JSX.Element {
@@ -38,10 +35,10 @@ function PropertyPage ():JSX.Element {
 
   const nearbyOffers = useSelectorTyped(nearbyOffersSelector);
   const offersList = useSelectorTyped(offersListSelector);
-  const isLoaded = useSelectorTyped(isDataLoadingSelector);
+  const isLoading = useSelectorTyped(isDataLoadingSelector);
   const isAuthorized = useSelectorTyped(authorizationStatusSelector);
 
-  if(isLoaded && !offersList.some((offer: Offer) => String(offer.id) === offerId) ) {
+  if(isLoading && !offersList.some((offer: Offer) => String(offer.id) === offerId) ) {
     return <NotFoundPage/>;
   }
 
@@ -70,112 +67,72 @@ function PropertyPage ():JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src={roomImage} alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src={apartment01Image} alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src={apartment02Image} alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src={apartment03Image} alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src={studio01Image} alt="Studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src={apartment01Image} alt="Studio" />
-              </div>
+              {currentOffer?.images.slice(0,6).map((imageUrl) => (
+                <div key={imageUrl} className="property__image-wrapper">
+                  <img className="property__image" src={imageUrl} alt="Studio" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {currentOffer?.isPremium ?
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div> : null || null}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-              Beautiful &amp; luxurious studio at great location
+                  {currentOffer?.title || 'Sorry, offer not found'}
                 </h1>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}} />
+                  <span style={{width: parseRatingToStars(currentOffer?.rating || 0)}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{currentOffer?.rating || 0}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-              Apartment
+                  {HousingType(currentOffer ? currentOffer.type : 'none')}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-              3 Bedrooms
+                  {currentOffer?.bedrooms || 0} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-              Max 4 adults
+                  Max {currentOffer?.maxAdults || 0} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€120</b>
+                <b className="property__price-value">€{currentOffer?.price || 0}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What{'\''}s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                Towels
-                  </li>
-                  <li className="property__inside-item">
-                Heating
-                  </li>
-                  <li className="property__inside-item">
-                Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                Fridge
-                  </li>
+                  {currentOffer?.goods.map((good) => (
+                    <li key={good} className="property__inside-item">
+                      {good}
+                    </li>
+                  )) || ''}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className={classNames('property__avatar-wrapper', 'user__avatar-wrapper', {'property__avatar-wrapper--pro' : currentOffer?.host.isPro || false})}>
                     <img className="property__avatar user__avatar" src={currentOffer?.host.avatarUrl || avatarDefault} alt="Host avatar" width={74} height={74} />
                   </div>
                   <span className="property__user-name">
-                Angelina
+                    {currentOffer?.host.name || 'Sorry, host name not found'}
                   </span>
                   <span className="property__user-status">
-                Pro
+                    {currentOffer?.host.isPro ? 'Pro' : null || null}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the currentCity comes to rest in this alley flowery and colorful.
+                    {currentOffer?.description || 'Sorry, description not found'}
                   </p>
                 </div>
               </div>
@@ -187,7 +144,7 @@ function PropertyPage ():JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map points={convertOffersToPoints(nearbyOffers)}/>
+            <Map points={convertOffersToPoints(nearbyOffers)} renderedOnPropertyPage/>
           </section>
         </section>
         <div className="container">

@@ -4,11 +4,10 @@ import RouterPaths from '../../const/routerPaths';
 import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
 import { logoutAction } from '../../store/apiActions';
 import { authorizationStatusSelector, userDataSelector } from '../../store/selectors';
-import { UserData } from '../../types/APITypes';
 
 const HeaderProfile = (): JSX.Element => {
   const isAuthorized = useSelectorTyped(authorizationStatusSelector);
-  const userData:UserData = useSelectorTyped(userDataSelector); //WTF
+  const userData = useSelectorTyped(userDataSelector);
   const dispatch = useDispatchTyped();
   if (isAuthorized) {
     const signOutClickHandle = () => {

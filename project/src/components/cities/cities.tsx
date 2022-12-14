@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SortTypes from '../../const/sortTypes';
+
 import { useSelectorTyped } from '../../hooks/typedWrappers';
 import { locationNameSelector } from '../../store/selectors';
 import { convertOffersToPoints } from '../../utils/utils';
@@ -7,6 +7,7 @@ import OffersList from '../offers-list/offers-list';
 import SortOptions from '../sort-options/sortOptions';
 import Map from '../map/map';
 import { Offer } from '../../types/offerTypes';
+import { offersSortTypes } from '../../const/sortTypes';
 
 type CitiesProps = {
   cityOffers: Offer[];
@@ -15,8 +16,8 @@ type CitiesProps = {
 function Cities ({cityOffers}: CitiesProps):JSX.Element {
   const selectedCity = useSelectorTyped(locationNameSelector);
 
-  const [isSortListOpened, setIsSortListOpened] = useState(false); //сделать закрытие по клику вне списка и смене выбранного города
-  const [sortType, setSortType] = useState(SortTypes.popular);
+  const [isSortListOpened, setIsSortListOpened] = useState(false);
+  const [offersSortType, setOffersSortType] = useState(offersSortTypes.popular);
 
   const toggleSortList = () => {
     setIsSortListOpened((prevState) => !prevState);
@@ -30,12 +31,12 @@ function Cities ({cityOffers}: CitiesProps):JSX.Element {
         <form className="places__sorting" action="#" method="get">
           <span className="places__sorting-caption">Sort by </span>
           <span onClick={toggleSortList} className="places__sorting-type" tabIndex={0}>
-            {sortType}
+            {offersSortType}
             <svg className="places__sorting-arrow" width={7} height={4}>
               <use xlinkHref="#icon-arrow-select" />
             </svg>
           </span>
-          <SortOptions isOpened={isSortListOpened} sortType={sortType} setSortType={setSortType} />
+          <SortOptions isOpened={isSortListOpened} currentSortType={offersSortType} setOffersSortType={setOffersSortType} />
         </form>
         <div className="cities__places-list places__list tabs__content">
           <OffersList cityOffers={cityOffers}/>
@@ -43,7 +44,7 @@ function Cities ({cityOffers}: CitiesProps):JSX.Element {
       </section>
       <div className="cities__right-section">
         <section className="cities__map map" id="map">
-          <Map points={convertOffersToPoints(cityOffers)}/>
+          <Map points={convertOffersToPoints(cityOffers)} renderedOnPropertyPage={false}/>
         </section>
       </div>
     </div>

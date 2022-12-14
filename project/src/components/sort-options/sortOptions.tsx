@@ -1,51 +1,45 @@
 import classNames from 'classnames';
-import SortTypes from '../../const/sortTypes';
+import { offersSortTypes } from '../../const/sortTypes';
 import { useDispatchTyped } from '../../hooks/typedWrappers';
 import { sortByPriceHTL, sortByPriceLTH, sortByRating, sortByPopular } from '../../store/data-slice/dataSlice';
 
 type SortOptionsProps = {
   isOpened: boolean;
-  setSortType: React.Dispatch<React.SetStateAction<SortTypes>>;
-  sortType: string;
+  setOffersSortType: React.Dispatch<React.SetStateAction<string>>;
+  currentSortType: string;
 }
 
-function SortOptions({isOpened, sortType, setSortType}: SortOptionsProps):JSX.Element {
+function SortOptions({isOpened, currentSortType, setOffersSortType}: SortOptionsProps):JSX.Element {
   const dispatch = useDispatchTyped();
 
-  const sortPriceHTLHandle = () => {
-    dispatch(sortByPriceHTL());
-    setSortType(SortTypes.priceHTL);
-  };
-
-  const sortPriceLTHHandle = () => {
-    dispatch(sortByPriceLTH());
-    setSortType(SortTypes.priceLTH);
-  };
-
-  const sortByRatingHandle = () => {
-    dispatch(sortByRating());
-    setSortType(SortTypes.rating);
-  };
-
-  const sortByPopularHandle = () => {
-    dispatch(sortByPopular());
-    setSortType(SortTypes.popular);
+  const sortSelectHandle = (sortOption: string) => {
+    switch (sortOption) {
+      case offersSortTypes.popular:
+        dispatch(sortByPopular());
+        setOffersSortType(offersSortTypes.popular);
+        break;
+      case offersSortTypes.priceHTL:
+        dispatch(sortByPriceHTL());
+        setOffersSortType(offersSortTypes.priceHTL);
+        break;
+      case offersSortTypes.priceLTH:
+        dispatch(sortByPriceLTH());
+        setOffersSortType(offersSortTypes.priceLTH);
+        break;
+      case offersSortTypes.rating:
+        dispatch(sortByRating());
+        setOffersSortType(offersSortTypes.rating);
+        break;
+    }
   };
 
   return (
     <ul className={classNames('places__options', 'places__options--custom', {'places__options--opened': isOpened})}>
-      <li onClick={sortByPopularHandle} className={classNames('places__option', {'places__option--active': sortType === SortTypes.popular})} tabIndex={0}>
-        Popular
-      </li>
-      <li onClick={sortPriceLTHHandle} className={classNames('places__option', {'places__option--active': sortType === SortTypes.priceLTH})} tabIndex={0}>
-        Price: low to high
-      </li>
-      <li onClick={sortPriceHTLHandle} className={classNames('places__option', {'places__option--active': sortType === SortTypes.priceHTL})} tabIndex={0}>
-        Price: high to low
-      </li>
-      <li onClick={sortByRatingHandle} className={classNames('places__option', {'places__option--active': sortType === SortTypes.rating})} tabIndex={0}>
-        Top rated first
-      </li>
+      {Object.values(offersSortTypes).map((sortOption) => (
+        <li key={sortOption} onClick={() => sortSelectHandle(sortOption)} className={classNames('places__option', {'places__option--active': currentSortType === sortOption})} tabIndex={0}>
+          {sortOption}
+        </li>
+      ))}
     </ul>
   );
 }

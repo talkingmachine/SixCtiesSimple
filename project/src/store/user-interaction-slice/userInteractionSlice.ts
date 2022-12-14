@@ -8,14 +8,14 @@ type InitialState = {
   activeOfferId: number;
 }
 
-const initialState: InitialState = {
+export const initialStateUserInteractionSlice: InitialState = {
   currentOffer: null,
   activeOfferId: -1,
 };
 
 export const userInteractionSlice = createSlice({
   name: ReducerNameSpaces.userInteraction,
-  initialState,
+  initialState: initialStateUserInteractionSlice,
   reducers: {
     setActiveOfferId: (state, action: PayloadAction<{activeOfferId: number}>) => {
       state.activeOfferId = action.payload.activeOfferId;

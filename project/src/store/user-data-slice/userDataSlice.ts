@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import AuthorizationStatus from '../../const/authorizationStatus';
 import { ReducerNameSpaces } from '../../const/reducer-name-spaces';
-import { UserData } from '../../types/APITypes';
+import { UserData } from '../../types/apiTypes';
 import { checkAuthAction, loginAction, logoutAction } from '../apiActions';
 
 type InitialState = {
@@ -9,7 +9,7 @@ type InitialState = {
   userData: UserData;
 }
 
-const initialState: InitialState = {
+export const initialStateDataSlice: InitialState = {
   authorizationStatus: AuthorizationStatus.Uknown,
   userData:  {
     avatarUrl: '',
@@ -23,7 +23,7 @@ const initialState: InitialState = {
 
 export const userDataSlice = createSlice({
   name: ReducerNameSpaces.userData,
-  initialState,
+  initialState: initialStateDataSlice,
   reducers: {},
   extraReducers(builder) {
     builder
@@ -31,9 +31,8 @@ export const userDataSlice = createSlice({
         state.userData = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
-      .addCase(checkAuthAction.rejected, (state, action) => {
+      .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-        //throw action.error;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.userData = action.payload;

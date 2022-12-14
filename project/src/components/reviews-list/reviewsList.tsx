@@ -4,11 +4,11 @@ import ReviewsItem from '../reviews-item/reviewsItem';
 
 
 function ReviewsList():JSX.Element {
-  const commentsList = useSelectorTyped(commentsListSelector);
+  const commentsList = useSelectorTyped(commentsListSelector).slice(-10);
 
   return (
     <ul className="reviews__list">
-      {commentsList.map((comment) => <ReviewsItem key={comment.id} commentData={comment}/>)}
+      {commentsList.reverse().map((comment) => <ReviewsItem key={comment.id} commentData={comment}/>)}
     </ul>
   );
 }
