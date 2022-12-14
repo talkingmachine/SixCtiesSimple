@@ -5,7 +5,7 @@ import { Point } from '../../types/mapTypes';
 import { Offer, Comment } from '../../types/offerTypes';
 import { fetchCommentsAction, fetchNearbyOffersAction, fetchOffersAction } from '../apiActions';
 
-type InitialState = {
+export type InitialState = {
   locationName: string;
   currentCityOffersList: Offer[];
   currentCityLocation: Point;
