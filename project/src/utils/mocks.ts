@@ -5,7 +5,7 @@ import { Offer } from '../types/offerTypes';
 
 const getRandomNumber = (number = 10) => Math.floor(Math.random() * number);
 
-const getFakeOffer = (): Offer => ({
+export const getFakeOffer = (): Offer => ({
   'bedrooms': getRandomNumber(),
   'city': {
     'location': {

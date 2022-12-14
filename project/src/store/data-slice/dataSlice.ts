@@ -3,7 +3,7 @@ import { DEFAULT_CITY } from '../../const/defaultValues';
 import { ReducerNameSpaces } from '../../const/reducer-name-spaces';
 import { Point } from '../../types/mapTypes';
 import { Offer, Comment } from '../../types/offerTypes';
-import { fetchCommentsAction, fetchNearbyOffersAction, fetchOffersAction } from '../apiActions';
+import { fetchCommentsAction, fetchNearbyOffersAction, fetchNewCommentAction, fetchOffersAction } from '../apiActions';
 
 export type InitialState = {
   locationName: string;
@@ -17,7 +17,7 @@ export type InitialState = {
   isDataLoading: boolean;
 }
 
-const initialState: InitialState = {
+export const initialStateDataSlice: InitialState = {
   locationName: DEFAULT_CITY,
   currentCityOffersList: [],
   currentCityLocation: {
@@ -36,7 +36,7 @@ const initialState: InitialState = {
 
 export const dataSlice = createSlice({
   name: ReducerNameSpaces.data,
-  initialState,
+  initialState: initialStateDataSlice,
   reducers: {
     setCurrentCityLocation: (state) => {
       const cityPoint = state.currentCityOffersList[0].city.location;
@@ -50,8 +50,13 @@ export const dataSlice = createSlice({
       state.locationName = action.payload.locationName;
       const isOffersListExist = state.propertyData.offersList.length !== 0;
       if (isOffersListExist) {
-        dataSlice.caseReducers.sortByPopular(state);
-        dataSlice.caseReducers.setCurrentCityLocation(state);
+        state.currentCityOffersList = state.propertyData.offersList.filter((offer)=>offer.city.name === state.locationName);
+        const cityPoint = state.currentCityOffersList[0].city.location;
+        state.currentCityLocation = {
+          lat: cityPoint.latitude,
+          lng: cityPoint.longitude,
+          zoom: cityPoint.zoom
+        };
       }
     },
     sortByPriceLTH: (state) => {
@@ -76,8 +81,13 @@ export const dataSlice = createSlice({
         state.isDataLoading = false;
         if (action.meta.arg && action.meta.arg.isAppStarts) {
           state.propertyData.offersList = action.payload;
-          dataSlice.caseReducers.sortByPopular(state); // выглядит странно, но пока самый валидный вариант
-          dataSlice.caseReducers.setCurrentCityLocation(state);
+          state.currentCityOffersList = state.propertyData.offersList.filter((offer)=>offer.city.name === state.locationName);
+          const cityPoint = state.currentCityOffersList[0].city.location;
+          state.currentCityLocation = {
+            lat: cityPoint.latitude,
+            lng: cityPoint.longitude,
+            zoom: cityPoint.zoom
+          };
         } else {
           state.propertyData.offersList = action.payload;
         }
@@ -89,6 +99,13 @@ export const dataSlice = createSlice({
         state.nearbyOffers = action.payload;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
+        state.propertyData.commentsList = action.payload;
+      })
+      .addCase(fetchNewCommentAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchNewCommentAction.fulfilled, (state, action) => {
+        state.isDataLoading = false;
         state.propertyData.commentsList = action.payload;
       });
   },

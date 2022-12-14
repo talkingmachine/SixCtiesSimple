@@ -1,15 +1,11 @@
 import { useState, FormEvent, memo } from 'react';
-import { useDispatchTyped } from '../../hooks/typedWrappers';
+import { normalLength } from '../../const/newCommentConsts';
+import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
 import { fetchNewCommentAction } from '../../store/apiActions';
+import { isDataLoadingSelector } from '../../store/selectors';
 
 type NewCommentFormProps = {
   id: string | undefined;
-}
-
-type fieldChangeHandleEvt = { target:
-    { name: string;
-      value: string;
-    };
 }
 
 const initialState = {
@@ -19,16 +15,30 @@ const initialState = {
 
 function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
   const dispatch = useDispatchTyped();
+  const isDataLoading = useSelectorTyped(isDataLoadingSelector);
   const [newCommentFormData, setNewCommentFormData] = useState(initialState);
+  const [isSubmitButtonActive, setIsSubmitButtonActive] = useState(false);
 
-  const fieldChangeHandle = (evt: fieldChangeHandleEvt) => {
-    const {name, value} = evt.target;
-    setNewCommentFormData({...newCommentFormData, [name]: value});
+  const isCommentValid = () => {
+    const isNormalLength = newCommentFormData.review.length >= normalLength.min && newCommentFormData.review.length <= normalLength.max;
+    return Boolean(id) && Boolean(isNormalLength) && Boolean(+newCommentFormData.rating);
+  };
+
+  const textAreaChangeHandle = (evt: FormEvent<HTMLTextAreaElement>) => {
+    setIsSubmitButtonActive(isCommentValid());
+    const {value} = (evt.target as HTMLTextAreaElement);
+    setNewCommentFormData({...newCommentFormData, review: value});
+  };
+
+  const radioChangeHandle = (evt: FormEvent<HTMLInputElement>) => {
+    setIsSubmitButtonActive(isCommentValid());
+    const {value} = (evt.target as HTMLInputElement);
+    setNewCommentFormData({...newCommentFormData, rating: value});
   };
 
   const commentSubmitButtonHandle = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (id) {
+    if (isCommentValid() && id) {
       dispatch(fetchNewCommentAction({newComment: {
         rating: +newCommentFormData.rating,
         comment: newCommentFormData.review
@@ -41,7 +51,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
     <form onSubmit={commentSubmitButtonHandle} className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input onChange={fieldChangeHandle}
+        <input onChange={radioChangeHandle}
           className="form__rating-input visually-hidden"
           name="rating"
           checked={newCommentFormData.rating === '5'}
@@ -54,7 +64,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
             <use xlinkHref="#icon-star" />
           </svg>
         </label>
-        <input onChange={fieldChangeHandle}
+        <input onChange={radioChangeHandle}
           className="form__rating-input visually-hidden"
           name="rating"
           checked={newCommentFormData.rating === '4'}
@@ -67,7 +77,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
             <use xlinkHref="#icon-star" />
           </svg>
         </label>
-        <input onChange={fieldChangeHandle}
+        <input onChange={radioChangeHandle}
           className="form__rating-input visually-hidden"
           name="rating"
           checked={newCommentFormData.rating === '3'}
@@ -80,7 +90,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
             <use xlinkHref="#icon-star" />
           </svg>
         </label>
-        <input onChange={fieldChangeHandle}
+        <input onChange={radioChangeHandle}
           className="form__rating-input visually-hidden"
           name="rating"
           checked={newCommentFormData.rating === '2'}
@@ -93,7 +103,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
             <use xlinkHref="#icon-star" />
           </svg>
         </label>
-        <input onChange={fieldChangeHandle}
+        <input onChange={radioChangeHandle}
           className="form__rating-input visually-hidden"
           name="rating"
           checked={newCommentFormData.rating === '1'}
@@ -107,7 +117,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
           </svg>
         </label>
       </div>
-      <textarea onChange={fieldChangeHandle}
+      <textarea onInput={textAreaChangeHandle}
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
@@ -119,7 +129,7 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
           To submit review please make sure to set
           <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isDataLoading || !isSubmitButtonActive}>Submit</button>
       </div>
     </form>
   );

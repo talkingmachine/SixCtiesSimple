@@ -3,7 +3,7 @@ import RouterPaths from '../../const/routerPaths';
 import { useDispatchTyped } from '../../hooks/typedWrappers';
 import { setActiveOfferId } from '../../store/user-interaction-slice/userInteractionSlice';
 import { Offer } from '../../types/offerTypes';
-import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils'; //возвращать скролл в начальное положение
+import { firstLetterToUpperCase, parseRatingToStars } from '../../utils/utils';
 
 type MainPageCardProps = {
   offerData: Offer;
@@ -11,7 +11,7 @@ type MainPageCardProps = {
 
 function MainPageCard ({offerData}:MainPageCardProps):JSX.Element {
 
-  const {type, title, price, rating, id, previewImage} = offerData;
+  const {type, title, price, rating, id, previewImage, isPremium} = offerData;
   const dispatch = useDispatchTyped();
 
   const mouseEnterHandle = () => {
@@ -24,10 +24,14 @@ function MainPageCard ({offerData}:MainPageCardProps):JSX.Element {
 
   return (
     <article onMouseEnter={mouseEnterHandle} onMouseLeave={mouseLeaveHandle} className="cities__card place-card">
+      {isPremium ?
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/#">
+        <Link to="">
           <img className="place-card__image" src={previewImage} alt="Place" width={260} height={200} />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

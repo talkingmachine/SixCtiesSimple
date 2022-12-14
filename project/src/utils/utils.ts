@@ -6,9 +6,9 @@ const parseRatingToStars = (number:number):string => (`${Math.round(number) * 20
 
 const firstLetterToUpperCase = (word:string):string => (word ? word[0].toUpperCase() + word.slice(1) : '');
 
-const getCommentDate = (dateString:string):string => dayjs(dateString).format('MMMM YYYY'); // April 2019
+const getCommentDate = (dateString:string):string => dayjs(dateString).format('MMMM YYYY');
 
-const getDateTimePropertyDate = (dateString:string):string => dayjs(dateString).format('YYYY-DD-MM'); //2019-04-24
+const getDateTimePropertyDate = (dateString:string):string => dayjs(dateString).format('YYYY-DD-MM');
 
 const convertOffersToPoints = (offersList: Offer[]):Point[] => offersList.map(({location, id})=>({
   lat: location.latitude,

@@ -5,17 +5,19 @@ import { LeafletMap, Point } from '../../types/mapTypes';
 import defaultMarkerIcon from '../../img/pin.svg';
 import activeMarkerIcon from '../../img/pin-active.svg';
 import { useSelectorTyped } from '../../hooks/typedWrappers';
-import { activeOfferIdSelector} from '../../store/selectors';
+import { activeOfferIdSelector, currentOfferSelector} from '../../store/selectors';
 
 type MapProps = {
   points: Point[];
+  renderedOnPropertyPage: boolean;
 }
 
-function Map ({points}: MapProps):JSX.Element {
+function Map ({points, renderedOnPropertyPage}: MapProps):JSX.Element {
   const mapRef = useRef(null);
   const map:LeafletMap = useMap(mapRef);
   const markersLayer = map ? L.layerGroup().addTo(map) : null;
-  const activeOfferId = useSelectorTyped(activeOfferIdSelector); // при смене страницы не меняется id в store
+  const activeOfferId = useSelectorTyped(activeOfferIdSelector);
+  const offerPoint = useSelectorTyped(currentOfferSelector)?.location;
 
   useEffect(()=>{
     const defaultMarker = new L.Icon({
@@ -34,16 +36,22 @@ function Map ({points}: MapProps):JSX.Element {
         L.marker({
           lat: lat,
           lng: lng,
-
         })
-          .setIcon(activeOfferId === id ? activeMarker : defaultMarker)
+          .setIcon(!renderedOnPropertyPage && activeOfferId === id ? activeMarker : defaultMarker)
           .addTo(markersLayer);
       });
+      if (renderedOnPropertyPage && offerPoint) {
+        L.marker({
+          lat: offerPoint.latitude,
+          lng: offerPoint.longitude,
+        }).setIcon(activeMarker)
+          .addTo(markersLayer);
+      }
     }
     return () => {
       markersLayer?.clearLayers();
     };
-  }, [markersLayer, points, activeOfferId]);
+  }, [markersLayer, points, activeOfferId, renderedOnPropertyPage, offerPoint]);
 
   return (
     <div style={{height: '100%'}} ref={mapRef}>

@@ -43,7 +43,5 @@ function SortOptions({isOpened, currentSortType, setOffersSortType}: SortOptions
     </ul>
   );
 }
-// на стриме говорили не перебарщивать с оптимизацией)
-// я сделаю если останется время, но типо ускорение перерисовки списка.. не знаю
 
 export default SortOptions;

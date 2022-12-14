@@ -1,9 +1,11 @@
 import { FormEvent, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { REG_EXP_EMAIL } from '../../const/regex';
 import RouterPaths from '../../const/routerPaths';
-import { useDispatchTyped } from '../../hooks/typedWrappers';
+import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
 import { loginAction } from '../../store/apiActions';
+import { authorizationStatusSelector } from '../../store/selectors';
 
 
 function LoginPage ():JSX.Element {
@@ -11,16 +13,26 @@ function LoginPage ():JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
+  const isAuthorized = useSelectorTyped(authorizationStatusSelector);
+
+  if (isAuthorized) {
+    navigate(RouterPaths.main);
+  }
 
   const signInButtonHandle = (evt: FormEvent<HTMLFormElement>) => {
+    const isPasswordStrong = (password: string) => /[a-zA-Z]/g.test(password) && /[0-9]/g.test(password);
+    const isEmailValid = (email: string) => REG_EXP_EMAIL.test(email);
     evt.preventDefault();
-    if (loginRef.current && passwordRef.current) {
+    if (loginRef.current &&
+        passwordRef.current &&
+        isPasswordStrong(passwordRef.current.value) &&
+        isEmailValid(loginRef.current.value)) {
       dispatch(loginAction({authData: {
         email: loginRef.current.value,
         password: passwordRef.current.value
       }}));
     }
-    navigate(RouterPaths.main);
+
   };
 
   return (

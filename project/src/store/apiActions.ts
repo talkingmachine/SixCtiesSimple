@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import APIRoute from '../const/APIRoute';
+import APIRoute from '../const/apiRoute';
 import { dropToken, saveToken } from '../services/token';
-import { AuthData, UserData } from '../types/APITypes';
+import { AuthData, UserData } from '../types/apiTypes';
 import { NewComment, Offer, Comment } from '../types/offerTypes';
 import { AppDispatch, State } from '../types/reduxTypes';
 import { } from '../store/data-slice/dataSlice';
@@ -22,7 +22,6 @@ export const fetchOffersAction = createAsyncThunk<Offer[], {isAppStarts: boolean
       const {data} = await api.get<Offer[]>(APIRoute.Hotels());
       return data;
     } catch (err) {
-      // отрисовка main-empty-page.tsx
       return rejectWithValue(err);
     }
   }
