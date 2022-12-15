@@ -1,4 +1,4 @@
-const APIRoute = {
+export const APIRoutes = {
   Login: ():string => '/login',
   Logout: ():string => '/logout',
   Hotels: ():string => '/hotels',
@@ -6,5 +6,3 @@ const APIRoute = {
   Hotel: (id: string):string => `/hotels/${id}`,
   Nearby: (id: string):string => `/hotels/${id}/nearby`,
 };
-
-export default APIRoute;
