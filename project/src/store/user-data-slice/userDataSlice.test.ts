@@ -4,9 +4,8 @@ import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import createAPI from '../../services/axios-api';
 import { State } from '../../types/reduxTypes';
-
 import { initialStateDataSlice, userDataSlice } from './userDataSlice';
-import APIRoute from '../../const/apiRoute';
+import { APIRoutes } from '../../const/APIRoutes';
 import { checkAuthAction } from '../apiActions';
 
 describe('Reducer: user data slice', () => {
@@ -30,7 +29,7 @@ describe('Async actions: user data slice', () => {
   it('should set "auth" authorization status when server return 200', async () => {
     const store = mockStore();
     mockAPI
-      .onGet(APIRoute.Login())
+      .onGet(APIRoutes.Login())
       .reply(200, []);
 
     expect(store.getActions()).toEqual([]);
