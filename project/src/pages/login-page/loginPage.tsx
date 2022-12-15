@@ -6,6 +6,7 @@ import { useDispatchTyped, useSelectorTyped } from '../../hooks/typedWrappers';
 import headerLogo from '../../img/logo.svg';
 import { loginAction } from '../../store/apiActions';
 import { authorizationStatusSelector } from '../../store/selectors';
+import { toast } from 'react-toastify';
 
 
 function LoginPage ():JSX.Element {
@@ -23,10 +24,12 @@ function LoginPage ():JSX.Element {
     const isPasswordStrong = (password: string) => /[a-zA-Z]/g.test(password) && /[0-9]/g.test(password);
     const isEmailValid = (email: string) => REG_EXP_EMAIL.test(email);
     evt.preventDefault();
-    if (loginRef.current &&
-        passwordRef.current &&
-        isPasswordStrong(passwordRef.current.value) &&
-        isEmailValid(loginRef.current.value)) {
+
+    if (passwordRef.current && !isPasswordStrong(passwordRef.current.value)) {
+      toast.warn('Password must contain at least one letter and one number');
+      return;
+    }
+    if (loginRef.current && passwordRef.current && isEmailValid(loginRef.current.value)) {
       dispatch(loginAction({authData: {
         email: loginRef.current.value,
         password: passwordRef.current.value
