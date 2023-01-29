@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/SixCtiesSimple/static/css/main.b3eeeea7.css",
+    "main.js": "/SixCtiesSimple/static/js/main.369ea77d.js",
+    "static/js/587.f53763f3.chunk.js": "/SixCtiesSimple/static/js/587.f53763f3.chunk.js",
+    "static/js/819.135c6a42.chunk.js": "/SixCtiesSimple/static/js/819.135c6a42.chunk.js",
+    "static/js/860.50fe569c.chunk.js": "/SixCtiesSimple/static/js/860.50fe569c.chunk.js",
+    "static/media/logo.svg": "/SixCtiesSimple/static/media/logo.fe71202393381ac7bff6796c2d32aff6.svg",
+    "index.html": "/SixCtiesSimple/index.html",
+    "static/media/avatar.svg": "/SixCtiesSimple/static/media/avatar.ab936ce8e958edf46e831f24248a75cc.svg",
+    "static/media/pin-active.svg": "/SixCtiesSimple/static/media/pin-active.6d8eeee8ce16154a24c9a0f9e49e40d0.svg",
+    "static/media/pin.svg": "/SixCtiesSimple/static/media/pin.e700a64af8af8f0d9422b64a361c1d35.svg",
+    "main.b3eeeea7.css.map": "/SixCtiesSimple/static/css/main.b3eeeea7.css.map",
+    "main.369ea77d.js.map": "/SixCtiesSimple/static/js/main.369ea77d.js.map",
+    "587.f53763f3.chunk.js.map": "/SixCtiesSimple/static/js/587.f53763f3.chunk.js.map",
+    "819.135c6a42.chunk.js.map": "/SixCtiesSimple/static/js/819.135c6a42.chunk.js.map",
+    "860.50fe569c.chunk.js.map": "/SixCtiesSimple/static/js/860.50fe569c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b3eeeea7.css",
+    "static/js/main.369ea77d.js"
+  ]
+}
