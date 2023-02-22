@@ -25,15 +25,15 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
   };
 
   const textAreaChangeHandle = (evt: FormEvent<HTMLTextAreaElement>) => {
-    setIsSubmitButtonActive(isCommentValid());
     const {value} = (evt.target as HTMLTextAreaElement);
-    setNewCommentFormData({...newCommentFormData, review: value});
+    setNewCommentFormData((prevState) => ({...prevState, review: value}));
+    setIsSubmitButtonActive(isCommentValid());
   };
 
   const radioChangeHandle = (evt: FormEvent<HTMLInputElement>) => {
-    setIsSubmitButtonActive(isCommentValid());
     const {value} = (evt.target as HTMLInputElement);
-    setNewCommentFormData({...newCommentFormData, rating: value});
+    setNewCommentFormData((prevState) => ({...prevState, rating: value}));
+    setIsSubmitButtonActive(isCommentValid());
   };
 
   const commentSubmitButtonHandle = (evt: FormEvent<HTMLFormElement>) => {
@@ -42,8 +42,9 @@ function NewCommentForm({id}: NewCommentFormProps):JSX.Element {
       dispatch(fetchNewCommentAction({newComment: {
         rating: +newCommentFormData.rating,
         comment: newCommentFormData.review
-      }, offerId: id,}));
+      }, offerId: id}));
       setNewCommentFormData(initialState);
+      setIsSubmitButtonActive(false);
     }
   };
 

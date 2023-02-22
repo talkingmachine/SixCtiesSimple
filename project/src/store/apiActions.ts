@@ -5,9 +5,6 @@ import { dropToken, saveToken } from '../services/token';
 import { AuthData, UserData } from '../types/apiTypes';
 import { NewComment, Offer, Comment } from '../types/offerTypes';
 import { AppDispatch, State } from '../types/reduxTypes';
-import { } from '../store/data-slice/dataSlice';
-import { } from '../store/user-interaction-slice/userInteractionSlice';
-import { } from '../store/user-data-slice/userDataSlice';
 
 type ThunkConfig = {
   dispatch: AppDispatch;

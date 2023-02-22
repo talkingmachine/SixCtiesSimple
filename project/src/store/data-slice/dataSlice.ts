@@ -101,11 +101,7 @@ export const dataSlice = createSlice({
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.propertyData.commentsList = action.payload;
       })
-      .addCase(fetchNewCommentAction.pending, (state) => {
-        state.isDataLoading = true;
-      })
       .addCase(fetchNewCommentAction.fulfilled, (state, action) => {
-        state.isDataLoading = false;
         state.propertyData.commentsList = action.payload;
       });
   },

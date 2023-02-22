@@ -29,6 +29,8 @@ function PropertyPage ():JSX.Element {
       dispatch(fetchCommentsAction({offerId}));
       dispatch(fetchNearbyOffersAction({offerId}));
     }
+    window.scrollTo(0, 0);
+
   }, [dispatch, offerId]);
 
   const currentOffer = useSelectorTyped(currentOfferSelector);

@@ -29,7 +29,7 @@ function MainPageCard ({offerData}:MainPageCardProps):JSX.Element {
           <span>Premium</span>
         </div> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to="">
+        <Link to={`${RouterPaths.offer}${id}`}>
           <img className="place-card__image" src={previewImage} alt="Place" width={260} height={200} />
         </Link>
       </div>
